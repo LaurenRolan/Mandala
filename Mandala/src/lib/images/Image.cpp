@@ -2,6 +2,10 @@
 
 Image::Image()
 {
-    forms = new FormList();
+    _forms = new FormList();
+}
+
+void Image::drawForm(Form *f) {
+    _forms->addForm(f);
 }
 

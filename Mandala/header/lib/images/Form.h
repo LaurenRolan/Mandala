@@ -19,8 +19,9 @@ public:
 
 
 private:
-    std::vector<Form*> data;
-    int index = 0;
+    std::vector<Form*> *_data;
+    int _index = 0;
+    int _maxIndex = 0;
 };
 
 

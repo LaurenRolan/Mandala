@@ -9,6 +9,8 @@ class Image
 {
 public:
     Image();
+
+    void drawForm(Form *f);
 private:
     FormList *_forms;
 

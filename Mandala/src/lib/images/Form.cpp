@@ -1,21 +1,27 @@
 #include "header/lib/images/Form.h"
 
 FormList::FormList() {
-    data = new vector();
+    _data = new std::vector<Form*>();
 }
 
 void FormList::addForm(Form *f) {
-   data[index++] = f;
+    _maxIndex = _index;
+    _data[_index++] = f;
+
 }
 
 void FormList::redo() {
-    if (index == data.size() - 1) {
-        throw ;
+    if (_index > _maxIndex) {
+        throw "Can't redo the action if there is no action to redo";
     } else {
-        index++;
+        _index++;
     }
 }
 
 void FormList::undo() {
-
+    if (_index == 0) {
+        throw "Can't undo the action if there is no action to undo";
+    } else {
+        _index--;
+    }
 }
