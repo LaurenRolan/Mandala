@@ -14,11 +14,11 @@ TEMPLATE = app
 INCLUDEPATH = ./header
 
 SOURCES += main.cpp\
-    ui/mainwindow.cpp
+    ui/mainwindow.cpp \
     src/lib/images/Image.cpp \
     src/lib/images/Form.cpp
 
-HEADERS  +=  ui/mainwindow.h
+HEADERS  +=  ui/mainwindow.h \
     header/lib/command/command.h \
     header/lib/images/Image.h \
     header/lib/images/Form.h
