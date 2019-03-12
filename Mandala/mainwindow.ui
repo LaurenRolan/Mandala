@@ -139,6 +139,26 @@
        <height>27</height>
       </rect>
      </property>
+     <item>
+      <property name="text">
+       <string>640x360</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>800x600</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>1280x1024</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>1920x1080</string>
+      </property>
+     </item>
     </widget>
     <widget class="QLabel" name="label_2">
      <property name="geometry">
