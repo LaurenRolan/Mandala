@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>772</width>
-    <height>608</height>
+    <height>590</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -139,26 +139,6 @@
        <height>27</height>
       </rect>
      </property>
-     <item>
-      <property name="text">
-       <string>640x360</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>800x600</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>1280x1024</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>1920x1080</string>
-      </property>
-     </item>
     </widget>
     <widget class="QLabel" name="label_2">
      <property name="geometry">
@@ -228,68 +208,6 @@
     <property name="frameShadow">
      <enum>QFrame::Raised</enum>
     </property>
-    <widget class="QLabel" name="label_3">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>20</y>
-       <width>71</width>
-       <height>17</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Line width</string>
-     </property>
-    </widget>
-    <widget class="QGraphicsView" name="graphicsView">
-     <property name="geometry">
-      <rect>
-       <x>90</x>
-       <y>10</y>
-       <width>31</width>
-       <height>31</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QSlider" name="horizontalSlider_2">
-     <property name="geometry">
-      <rect>
-       <x>140</x>
-       <y>10</y>
-       <width>160</width>
-       <height>29</height>
-      </rect>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pushButton_2">
-     <property name="geometry">
-      <rect>
-       <x>310</x>
-       <y>10</y>
-       <width>99</width>
-       <height>27</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Line color</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pushButton_3">
-     <property name="geometry">
-      <rect>
-       <x>640</x>
-       <y>10</y>
-       <width>99</width>
-       <height>27</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Background</string>
-     </property>
-    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">

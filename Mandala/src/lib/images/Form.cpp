@@ -6,7 +6,8 @@ FormList::FormList() {
 
 void FormList::addForm(Form *f) {
     _maxIndex = _index;
-    _data[_index++] = f;
+    _data->insert(_data->begin() + _index++, f); //Je pense que c'est ça
+//    _data[_index++] = f;
 
 }
 
