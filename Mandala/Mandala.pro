@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui printsupport
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -13,15 +13,17 @@ TEMPLATE = app
 
 INCLUDEPATH = ./header
 
-SOURCES += main.cpp\
-    ui/mainwindow.cpp \
+SOURCES += src/main.cpp\
+    src/ui/mainwindow.cpp \
     src/lib/images/Image.cpp \
-    src/lib/images/Form.cpp
+    src/lib/images/Form.cpp \
+    src/ui/MandalaPainter.cpp
 
-HEADERS  +=  ui/mainwindow.h \
+HEADERS  +=  header/ui/mainwindow.h \
     header/lib/command/command.h \
     header/lib/images/Image.h \
-    header/lib/images/Form.h
+    header/lib/images/Form.h \
+    header/ui/MandalaPainter.h
 
 FORMS    += \
-    ui/mainwindow.ui
+    src/ui/mainwindow.ui
