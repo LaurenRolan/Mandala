@@ -22,12 +22,11 @@ private slots:
     void open();
     void save();
     void penColor();
-    void penWidth();
+    void penWidth(int width);
     void about();
 
 private:
-    void createActions();
-    void createMenus();
+    void connectMenus();
     bool maybeSave();
     bool saveFile(const QByteArray &fileFormat);
 
