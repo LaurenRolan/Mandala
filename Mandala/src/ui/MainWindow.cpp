@@ -55,9 +55,9 @@ void MainWindow::save()
 
 void MainWindow::penColor()
 {
+    std::cout << "SUP\n";
     QColor newColor = QColorDialog::getColor(mandalaArea->penColor());
     if (newColor.isValid()) {
-        std::cout << "SUP"; //Printing when out
         mandalaArea->setPenColor(newColor);
     }
 }
@@ -131,5 +131,6 @@ bool MainWindow::saveFile(const QByteArray &fileFormat)
 
 void MainWindow::on_lineSlider_sliderMoved(int position)
 {
+    std::cout << "Hey\n";
     penWidth(position);
 }
