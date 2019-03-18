@@ -9,16 +9,12 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
-{
-    //To allow use of keyboard
-    setFocusPolicy(Qt::StrongFocus);
-
-    //To show the menu in the application
+{    //To show the menu in the application
     QCoreApplication::setAttribute(Qt::AA_DontUseNativeMenuBar);
 
     ui->setupUi(this);
 
-    mandalaArea = new MandalaPainter;
+    mandalaArea = ui->widget;
     connectMenus();
 
     setWindowTitle(tr("Mandala"));
@@ -87,6 +83,8 @@ void MainWindow::connectMenus()
             mandalaArea, SLOT(clearImage()));
     connect(ui->lineSlider, SIGNAL(sliderMoved(int)),
             this, SLOT(penWidth(int);));
+    connect(ui->lineColorButton, SIGNAL(clicked()),
+            this, SLOT(penColor()));
 }
 
 
