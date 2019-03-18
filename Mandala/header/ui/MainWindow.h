@@ -25,6 +25,8 @@ private slots:
     void penWidth(int width);
     void about();
 
+    void on_lineSlider_sliderMoved(int position);
+
 private:
     void connectMenus();
     bool maybeSave();

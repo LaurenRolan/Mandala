@@ -1,10 +1,11 @@
-#include "header/ui/mainwindow.h"
-#include "ui_mainwindow.h"
+#include "header/ui/MainWindow.h"
+#include "ui_MainWindow.h"
 #include <QFileDialog>
 #include <QDir>
 #include <QColorDialog>
 #include <QInputDialog>
 #include <QMessageBox>
+#include <iostream>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -55,13 +56,17 @@ void MainWindow::save()
 void MainWindow::penColor()
 {
     QColor newColor = QColorDialog::getColor(mandalaArea->penColor());
-    if (newColor.isValid())
+    if (newColor.isValid()) {
+        std::cout << "SUP"; //Printing when out
         mandalaArea->setPenColor(newColor);
+    }
 }
 
 void MainWindow::penWidth(int width)
 {
+    std::cout << "In width";
     mandalaArea->setPenWidth(width);
+    std::cout << "Width : " << width;
 }
 
 
@@ -123,3 +128,8 @@ bool MainWindow::saveFile(const QByteArray &fileFormat)
     }
 }
 
+
+void MainWindow::on_lineSlider_sliderMoved(int position)
+{
+    penWidth(position);
+}

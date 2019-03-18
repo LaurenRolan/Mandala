@@ -16,8 +16,8 @@ include_directories(.)
 set(mandala_SRC
         src/lib/images/Form.cpp
         src/lib/images/Image.cpp
-        src/ui/mainwindow.cpp
-        src/ui/mainwindow.ui
+        src/ui/MainWindow.cpp
+        src/ui/MainWindow.ui
         src/ui/MandalaPainter.cpp
         src/main.cpp
         )
@@ -26,7 +26,7 @@ set(mandala_HDR
         header/lib/images/Form.h
         header/lib/images/Image.h
         header/lib/command/command.h
-        header/ui/mainwindow.h
+        header/ui/MainWindow.h
         header/ui/MandalaPainter.h
         )
 
