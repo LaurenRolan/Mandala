@@ -17,9 +17,6 @@ file(GLOB_RECURSE mandala_SRC src/*)
 file(GLOB_RECURSE mandala_HDR header/*)
 
 
-add_executable(Mandala
-        ${mandala_SRC}
-        ${mandala_HDR}
-        Mandala.pro    )
+add_executable(Mandala ${mandala_SRC} ${mandala_HDR} )
 
 target_link_libraries(Mandala Qt5::Widgets Qt5::PrintSupport)

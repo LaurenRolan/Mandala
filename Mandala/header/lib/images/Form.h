@@ -22,7 +22,6 @@ public:
     void undo();
     void redo();
 
-
 private:
     std::vector<Form*> *_data;
     int _index = 0;
