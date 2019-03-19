@@ -125,6 +125,7 @@ void MandalaPainter::resizeImage(QImage *image, const QSize &newSize)
 
 void MandalaPainter::print()
 {
+    /*
     #if QT_CONFIG(printdialog)
     QPrinter printer(QPrinter::HighResolution);
 
@@ -139,4 +140,5 @@ void MandalaPainter::print()
            painter.drawImage(0, 0, image);
        }
     #endif // QT_CONFIG(printdialog)
+*/
 }

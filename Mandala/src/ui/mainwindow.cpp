@@ -10,11 +10,16 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+    //To allow use of keyboard
+    setFocusPolicy(Qt::StrongFocus);
+
+    //To show the menu in the application
+    QCoreApplication::setAttribute(Qt::AA_DontUseNativeMenuBar);
+
     ui->setupUi(this);
 
     mandalaArea = new MandalaPainter;
-    createActions();
-    createMenus();
+    connectMenus();
 
     setWindowTitle(tr("Mandala"));
 }
@@ -58,15 +63,9 @@ void MainWindow::penColor()
         mandalaArea->setPenColor(newColor);
 }
 
-void MainWindow::penWidth()
+void MainWindow::penWidth(int width)
 {
-    bool ok;
-    int newWidth = QInputDialog::getInt(this, tr("Mandala"),
-                                        tr("Select pen width:"),
-                                        mandalaArea->penWidth(),
-                                        1, 50, 1, &ok);
-    if (ok)
-        mandalaArea->setPenWidth(newWidth);
+    mandalaArea->setPenWidth(width);
 }
 
 
@@ -78,14 +77,18 @@ void MainWindow::about()
                "Erik KUBIAK and Lauren ROLAN"));
 }
 
-void MainWindow::createActions()
+void MainWindow::connectMenus()
 {
-
+    connect(ui->action_Save, SIGNAL(triggered()),
+            this, SLOT(save()));
+    connect(ui->action_Open, SIGNAL(triggered()),
+            this, SLOT(open()));
+    connect(ui->clearButton, SIGNAL(clicked()),
+            mandalaArea, SLOT(clearImage()));
+    connect(ui->lineSlider, SIGNAL(sliderMoved(int)),
+            this, SLOT(penWidth(int);));
 }
 
-void MainWindow::createMenus()
-{
-}
 
 bool MainWindow::maybeSave()
 {

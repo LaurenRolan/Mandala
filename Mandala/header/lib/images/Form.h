@@ -2,6 +2,11 @@
 #define FORM_H
 
 #include <vector>
+#include <functional>
+
+#include <lib/images/Pixel.h>
+
+typedef std::function<void(Pixel &)> drawer;
 
 
 class Form;
@@ -28,7 +33,7 @@ private:
 class Form
 {
 public:
-    virtual void Draw() = 0;
+    virtual void draw(drawer d) = 0;
 };
 
 #endif // FORM_H

@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.13)
+cmake_minimum_required(VERSION 3.12)
 project(Mandala)
 
 set(CMAKE_AUTOMOC ON)
@@ -11,29 +11,15 @@ find_package(Qt5Gui REQUIRED)
 find_package(Qt5PrintSupport REQUIRED)
 
 
-include_directories(.)
+include_directories(header)
 
-set(mandala_SRC
-        src/lib/images/Form.cpp
-        src/lib/images/Image.cpp
-        src/ui/mainwindow.cpp
-        src/ui/mainwindow.ui
-        src/ui/MandalaPainter.cpp
-        src/main.cpp
-        )
-
-set(mandala_HDR
-        header/lib/images/Form.h
-        header/lib/images/Image.h
-        header/lib/command/command.h
-        header/ui/mainwindow.h
-        header/ui/MandalaPainter.h
-        )
+file(GLOB_RECURSE mandala_SRC src/*)
+file(GLOB_RECURSE mandala_HDR header/*)
 
 
 add_executable(Mandala
         ${mandala_SRC}
         ${mandala_HDR}
-        Mandala.pro)
+        Mandala.pro    )
 
 target_link_libraries(Mandala Qt5::Widgets Qt5::PrintSupport)

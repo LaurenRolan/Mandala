@@ -7,6 +7,7 @@
 class MandalaPainter : public QWidget
 {
     Q_OBJECT
+
 public:
     explicit MandalaPainter(QWidget *parent = nullptr);
     bool openImage(const QString &fileName);
