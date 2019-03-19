@@ -6,7 +6,11 @@
 
 QT       += core gui printsupport
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 5): QT += widgets
+
+CONFIG += c++11;
+
+QMAKE_CXXFLAGS += -std=c++0x
 
 TARGET = Mandala
 TEMPLATE = app

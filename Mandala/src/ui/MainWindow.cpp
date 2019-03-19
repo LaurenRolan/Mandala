@@ -16,6 +16,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     mandalaArea = ui->widget;
+    mandalaArea->setHeight(360);
+    mandalaArea->setWidth(640);
+
     connectMenus();
 
     setWindowTitle(tr("Mandala"));
@@ -55,7 +58,6 @@ void MainWindow::save()
 
 void MainWindow::penColor()
 {
-    std::cout << "SUP\n";
     QColor newColor = QColorDialog::getColor(mandalaArea->penColor());
     if (newColor.isValid()) {
         mandalaArea->setPenColor(newColor);
@@ -64,9 +66,7 @@ void MainWindow::penColor()
 
 void MainWindow::penWidth(int width)
 {
-    std::cout << "In width";
     mandalaArea->setPenWidth(width);
-    std::cout << "Width : " << width;
 }
 
 
@@ -86,18 +86,25 @@ void MainWindow::connectMenus()
             this, SLOT(open()));
     connect(ui->clearButton, SIGNAL(clicked()),
             mandalaArea, SLOT(clearImage()));
-    connect(ui->lineSlider, SIGNAL(sliderMoved(int)),
-            this, SLOT(penWidth(int);));
     connect(ui->lineColorButton, SIGNAL(clicked()),
             this, SLOT(penColor()));
 }
 
+void MainWindow::resizeImage(const QString & newSize) {
+    int xIndex = newSize.indexOf('x');
+    QString stringWidth = newSize.mid(0, xIndex);
+    QString stringHeight = newSize.mid(xIndex + 1);
+    mandalaArea->setHeight(stringHeight.toInt());
+    mandalaArea->setWidth(stringWidth.toInt());
+    mandalaArea->resize(stringWidth.toInt(), stringHeight.toInt());
+    adjustSize();
+}
 
 bool MainWindow::maybeSave()
 {
     if (mandalaArea->isModified()) {
        QMessageBox::StandardButton ret;
-       ret = QMessageBox::warning(this, tr("Scribble"),
+       ret = QMessageBox::warning(this, tr("Mandala"),
                           tr("The image has been modified.\n"
                              "Do you want to save your changes?"),
                           QMessageBox::Save | QMessageBox::Discard
@@ -131,6 +138,10 @@ bool MainWindow::saveFile(const QByteArray &fileFormat)
 
 void MainWindow::on_lineSlider_sliderMoved(int position)
 {
-    std::cout << "Hey\n";
     penWidth(position);
+}
+
+void MainWindow::on_sizeBox_currentIndexChanged(const QString &arg1)
+{
+    resizeImage(arg1);
 }
