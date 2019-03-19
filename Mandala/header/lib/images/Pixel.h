@@ -6,14 +6,10 @@
 #define MANDALA_PIXEL_H
 
 #include <QColor>
-
-
-struct Point {
-	int line, column;
-};
+#include <QPoint>
 
 struct Pixel {
-	Point p;
+	QPoint p;
 	QColor color;
 };
 

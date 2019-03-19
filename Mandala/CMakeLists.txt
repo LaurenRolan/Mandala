@@ -12,6 +12,7 @@ find_package(Qt5PrintSupport REQUIRED)
 
 
 include_directories(header)
+include_directories(header/ui)
 
 file(GLOB_RECURSE mandala_SRC src/*)
 file(GLOB_RECURSE mandala_HDR header/*)

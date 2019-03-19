@@ -6,7 +6,7 @@
 
 #include <lib/images/Pixel.h>
 
-typedef std::function<void(Pixel &)> drawer;
+typedef std::function<void(void)> drawer;
 
 
 class Form;
@@ -32,7 +32,7 @@ private:
 class Form
 {
 public:
-    virtual void draw(drawer d) = 0;
+    virtual void draw() = 0;
 };
 
 #endif // FORM_H

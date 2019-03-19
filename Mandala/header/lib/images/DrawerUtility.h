@@ -5,20 +5,23 @@
 #ifndef MANDALA_DRAWERUTILITY_H
 #define MANDALA_DRAWERUTILITY_H
 
-#include <QImage>
+#include <QPoint>
 
-#include "Pixel.h"
 #include "Image.h"
 
-class DrawerUtility {
+#include "Drawable.h"
+
+class DrawerUtility : Drawable {
 public:
 	DrawerUtility();
-	void onDrawEvent(Point &p);
-	void setColor(QColor &color);
-	QImage  getImage();
-	QImage& getImageReference();
+	void onDraw(QPoint &p) override;
+	void drawLine(QPoint &origin, QPoint &extremity) override;
+	void setColor(QColor &color) override;
+	Image  getImage();
+	Image& getImageReference();
 private:
-
+	QColor color;
+	Image *image;
 };
 
 

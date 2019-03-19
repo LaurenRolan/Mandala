@@ -14,15 +14,10 @@ TEMPLATE = app
 INCLUDEPATH = ./header
 
 SOURCES += src/main.cpp\
-    src/ui/mainwindow.cpp \
-    src/lib/images/Image.cpp \
-    src/lib/images/Form.cpp \
+    src/ui/mainwindow.cpp
     src/ui/MandalaPainter.cpp
 
 HEADERS  +=  header/ui/mainwindow.h \
-    header/lib/command/command.h \
-    header/lib/images/Image.h \
-    header/lib/images/Form.h \
     header/ui/MandalaPainter.h
 
 FORMS    += \
