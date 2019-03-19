@@ -148,7 +148,6 @@ void MandalaPainter::drawLine(QPoint &beginPoint, const QPoint &endPoint) {
         //Partie pour la rotation
         //painter.translate(QPoint(-myWidth / 2, -myHeight / 2));
     }
-    painter.resetTransform();
 }
 
 

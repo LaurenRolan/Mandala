@@ -88,6 +88,12 @@ void MainWindow::connectMenus()
             mandalaArea, SLOT(clearImage()));
     connect(ui->lineColorButton, SIGNAL(clicked()),
             this, SLOT(penColor()));
+    connect(ui->addSliceButton, SIGNAL(clicked()),
+            mandalaArea, SLOT(increaseSlices()));
+    connect(ui->removeSliceButton, SIGNAL(clicked()),
+            mandalaArea, SLOT(decreaseSlices()));
+    connect(ui->slicesEdit, SIGNAL(textChanged(QString)),
+            this, SLOT(slicesChanged(QString)));
 }
 
 void MainWindow::resizeImage(const QString & newSize) {
@@ -144,4 +150,8 @@ void MainWindow::on_lineSlider_sliderMoved(int position)
 void MainWindow::on_sizeBox_currentIndexChanged(const QString &arg1)
 {
     resizeImage(arg1);
+}
+
+void MainWindow::slicesChanged(QString slicesText) {
+    //TODO
 }
