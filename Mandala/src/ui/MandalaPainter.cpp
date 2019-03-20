@@ -140,23 +140,25 @@ void MandalaPainter::drawLine(QPoint &beginPoint, const QPoint &endPoint) {
     drawable->setColor(myPenColor);
     drawable->setPenWidth(myPenWidth);
 
+    QPoint endPointTmp = endPoint;
+
     double angle = 360.0 / numberSlices;
 
     for(int i = 0; i < numberSlices; i++){
-        //painter.translate(QPoint(myWidth / 2, myHeight / 2));
-        //painter.rotate(angle);
-        painter.drawLine(beginPoint, endPoint);
-		drawable->drawLine(beginPoint, endPoint);
+        painter.drawLine(beginPoint, endPointTmp);
+		drawable->drawLine(beginPoint, endPointTmp);
         modified = true;
 
         int rad = (myPenWidth / 2) + 2;
-        update(QRect(beginPoint, endPoint).normalized()
+        update(QRect(beginPoint, endPointTmp).normalized()
                                          .adjusted(-rad, -rad, +rad, +rad));
-        beginPoint = endPoint;
+        //
 
-        //Partie pour la rotation
-        //painter.translate(QPoint(-myWidth / 2, -myHeight / 2));
+        beginPoint  = QTransform().translate(myWidth / 2., myHeight / 2.).rotate(angle).translate(-myWidth / 2., -myHeight / 2.).map(beginPoint);
+		endPointTmp = QTransform().translate(myWidth / 2., myHeight / 2.).rotate(angle).translate(-myWidth / 2., -myHeight / 2.).map(endPointTmp);
     }
+
+	beginPoint = endPointTmp;
 }
 
 
