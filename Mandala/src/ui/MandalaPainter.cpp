@@ -19,6 +19,7 @@ MandalaPainter::MandalaPainter(QWidget *parent) : QWidget(parent)
     numberSlices = 2;
     colorTurning = false;
     hasToShowGrid = false;
+    mirroring = false;
 
     drawable = new DrawerUtility();
 }
@@ -140,8 +141,11 @@ void MandalaPainter::drawLine(QPoint &beginPoint, const QPoint &endPoint) {
     QPoint endPointTmp = endPoint;
 
     double angle = 360.0 / numberSlices;
-	QTransform transform;
-	transform.translate(myWidth / 2., myHeight / 2.).rotate(angle).translate(- myWidth / 2., - myHeight / 2.);
+	QTransform rotateTransform;
+	rotateTransform.translate(myWidth / 2., myHeight / 2.).rotate(angle).translate(- myWidth / 2., - myHeight / 2.);
+
+	QTransform symetryTransform;
+	symetryTransform.translate(myWidth / 2., myHeight / 2.).rotate(angle + angle / 2.).rotate(180., Qt::YAxis).translate(- myWidth / 2., - myHeight / 2.);
 
 	int rad = (myPenWidth / 2) + 2;
 
@@ -149,7 +153,7 @@ void MandalaPainter::drawLine(QPoint &beginPoint, const QPoint &endPoint) {
 	myPenColor.getHsv(&h, &s, &v, &a);
 
 	QColor color = myPenColor;
-	//drawable->beginForm();
+
 	drawable->setColor(color);
 	painter.setPen(pen);
     for(int i = 0; i < numberSlices; i++) {
@@ -164,11 +168,25 @@ void MandalaPainter::drawLine(QPoint &beginPoint, const QPoint &endPoint) {
     	painter.drawLine(beginPoint, endPointTmp);
 		drawable->drawLine(beginPoint, endPointTmp);
 
-		beginPoint  = transform.map(beginPoint);
-		endPointTmp = transform.map(endPointTmp);
+
+		if (mirroring) {
+
+			QPoint beginPointMirroring, endPointMirroring;
+
+			beginPointMirroring = symetryTransform.map(beginPoint);
+			endPointMirroring   = symetryTransform.map(endPointTmp);
+
+			painter.drawLine(beginPointMirroring, endPointMirroring);
+			drawable->drawLine(beginPointMirroring, endPointMirroring);
+
+		}
+
+		beginPoint  = rotateTransform.map(beginPoint);
+		endPointTmp = rotateTransform.map(endPointTmp);
+
     }
 
-	//drawable->endForm();
+
 
 
 	beginPoint = endPointTmp;
