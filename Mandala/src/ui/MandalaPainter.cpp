@@ -154,8 +154,11 @@ void MandalaPainter::drawLine(QPoint &beginPoint, const QPoint &endPoint) {
                                          .adjusted(-rad, -rad, +rad, +rad));
         //
 
-        beginPoint  = QTransform().translate(myWidth / 2., myHeight / 2.).rotate(angle).translate(-myWidth / 2., -myHeight / 2.).map(beginPoint);
-		endPointTmp = QTransform().translate(myWidth / 2., myHeight / 2.).rotate(angle).translate(-myWidth / 2., -myHeight / 2.).map(endPointTmp);
+        QTransform transform;
+		transform.translate(myWidth / 2., myHeight / 2.).rotate(angle).translate(-myWidth / 2., -myHeight / 2.);
+
+        beginPoint  = transform.map(beginPoint);
+		endPointTmp = transform.map(endPointTmp);
     }
 
 	beginPoint = endPointTmp;
