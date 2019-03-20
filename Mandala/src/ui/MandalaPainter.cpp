@@ -165,12 +165,10 @@ void MandalaPainter::resizeImage(QImage *image, const QSize &newSize)
 
 void MandalaPainter::print()
 {
-<<<<<<< HEAD
+
     /*
     #if QT_CONFIG(printdialog)
-=======
-    //#if QT_CONFIG(printdialog)
->>>>>>> 2f1bdde60e5469b24b236a82cb4922f598e8c3d1
+
     QPrinter printer(QPrinter::HighResolution);
 
     QPrintDialog printDialog(&printer, this);
@@ -183,10 +181,7 @@ void MandalaPainter::print()
            painter.setWindow(image.rect());
            painter.drawImage(0, 0, image);
        }
-<<<<<<< HEAD
     #endif // QT_CONFIG(printdialog)
 */
-=======
-    //#endif // QT_CONFIG(printdialog)
->>>>>>> 2f1bdde60e5469b24b236a82cb4922f598e8c3d1
+
 }
