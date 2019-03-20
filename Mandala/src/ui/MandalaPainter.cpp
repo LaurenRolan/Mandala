@@ -261,3 +261,9 @@ int MandalaPainter::getMyPenWidth() const {
 	return myPenWidth;
 }
 
+void MandalaPainter::setMirroring(int mirroring) {
+	MandalaPainter::mirroring = static_cast<bool>(mirroring);
+	repaint();
+}
+
+

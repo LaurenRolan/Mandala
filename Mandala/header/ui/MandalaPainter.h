@@ -28,6 +28,9 @@ public slots:
     void setSlices(int newNumberSlices);
 	void setColorTurning(int colorTurning);
 	void setPenWidth(int newWidth);
+	int getMyPenWidth() const;
+
+	void setMirroring(int mirroring);
 
 	void undo();
 	void redo();
@@ -51,10 +54,6 @@ private:
     bool modified;
     bool scribbling;
     int myPenWidth;
-public:
-	int getMyPenWidth() const;
-
-private:
 	int numberSlices;
     int myWidth;
     int myHeight;
@@ -70,6 +69,10 @@ private:
     Drawable *drawable;
 
 	bool colorTurning;
+
+	bool mirroring;
+
+private:
 
 	bool hasToShowGrid;
 	int gridIntensity;

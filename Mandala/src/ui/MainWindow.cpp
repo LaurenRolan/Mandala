@@ -91,6 +91,8 @@ void MainWindow::connectMenus()
     connect(ui->action_Open, SIGNAL(triggered()), this, SLOT(open()));
     connect(ui->lineColorButton, SIGNAL(clicked()), this, SLOT(penColor()));
 
+    connect(ui->mirrorBox, SIGNAL(stateChanged(int)), mandalaArea, SLOT(setMirroring(int)));
+
     connect(ui->lineSlider, SIGNAL(valueChanged(int)), mandalaArea, SLOT(setPenWidth(int)));
     connect(ui->lineSlider, SIGNAL(valueChanged(int)), this, SLOT(onPenWidthChanged(int)));
 
