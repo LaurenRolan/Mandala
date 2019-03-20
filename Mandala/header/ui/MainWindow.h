@@ -25,7 +25,6 @@ private slots:
     void penWidth(int width);
     void about();
     void resizeImage(const QString & newSize);
-    void slicesChanged(QString slicesText);
 
     void setColorTurning(bool);
 

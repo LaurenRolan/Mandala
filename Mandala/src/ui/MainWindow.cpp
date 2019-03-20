@@ -87,8 +87,13 @@ void MainWindow::connectMenus()
     connect(ui->lineColorButton, SIGNAL(clicked()), this, SLOT(penColor()));
 
     connect(ui->slicesCount, SIGNAL(valueChanged(int)), mandalaArea, SLOT(setSlices(int)));
+	connect (ui->slicesCountSlider, SIGNAL(valueChanged(int)), mandalaArea, SLOT(setSlices(int)));
+
     connect(ui->colorChanging, SIGNAL(stateChanged(int)), mandalaArea, SLOT(setColorTurning(int)));
     connect(ui->clearButton, SIGNAL(clicked()), mandalaArea, SLOT(clearImage()));
+
+    connect(ui->showGridBox, SIGNAL(stateChanged(int)), mandalaArea, SLOT(setHasToShowGrid(int)));
+    connect(ui->gridIntensitySLider, SIGNAL(valueChanged(int)), mandalaArea, SLOT(setGridIntensity(int)));
 
     connect (ui->slicesCount, SIGNAL(valueChanged(int)), ui->slicesCountSlider, SLOT(setValue(int)));
     connect (ui->slicesCountSlider, SIGNAL(valueChanged(int)), ui->slicesCount, SLOT(setValue(int)));
@@ -159,10 +164,6 @@ void MainWindow::on_lineSlider_sliderMoved(int position)
 void MainWindow::on_sizeBox_currentIndexChanged(const QString &arg1)
 {
     resizeImage(arg1);
-}
-
-void MainWindow::slicesChanged(QString slicesText) {
-    //TODO
 }
 
 void MainWindow::setColorTurning(bool newValue) {

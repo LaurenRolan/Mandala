@@ -17,12 +17,14 @@ MandalaPainter::MandalaPainter(QWidget *parent) : QWidget(parent)
     myPenColor = Qt::blue;
     numberSlices = 2;
     colorTurning = false;
+    hasToShowGrid = false;
 
     drawable = new DrawerUtility();
 }
 
 void MandalaPainter::setSlices(int newNumberSlices) {
     numberSlices = newNumberSlices;
+    repaint();
 }
 
 
@@ -108,6 +110,10 @@ void MandalaPainter::paintEvent(QPaintEvent *event)
     QPainter painter(this);
     QRect dirtyRect = event->rect();
     painter.drawImage(dirtyRect, image, dirtyRect);
+
+    if(hasToShowGrid && gridIntensity != 0) {
+		drawGrid(painter);
+    }
 }
 
 void MandalaPainter::resizeEvent(QResizeEvent *event)
@@ -156,8 +162,8 @@ void MandalaPainter::drawLine(QPoint &beginPoint, const QPoint &endPoint) {
 		drawable->drawLine(beginPoint, endPointTmp);
 
 
-        update(QRect(beginPoint, endPointTmp).normalized()
-                                         .adjusted(-rad, -rad, +rad, +rad));
+        //update(QRect(beginPoint, endPointTmp).normalized()
+        //                                 .adjusted(-rad, -rad, +rad, +rad));
 
 
 
@@ -167,6 +173,7 @@ void MandalaPainter::drawLine(QPoint &beginPoint, const QPoint &endPoint) {
 
 	beginPoint = endPointTmp;
 	modified = true;
+	repaint();
 }
 
 
@@ -209,10 +216,34 @@ void MandalaPainter::setColorTurning(int newValue) {
 	colorTurning = static_cast<bool>(newValue);
 }
 
-void MandalaPainter::setHasToShowGrid(bool hasToShowGrid) {
-	MandalaPainter::hasToShowGrid = hasToShowGrid;
+void MandalaPainter::setHasToShowGrid(int hasToShowGrid) {
+	MandalaPainter::hasToShowGrid = static_cast<bool>(hasToShowGrid);
+
+	if (hasToShowGrid) {
+		repaint();
+	}
 }
 
 void MandalaPainter::setGridIntensity(int gridIntensity) {
 	MandalaPainter::gridIntensity = gridIntensity;
+
+	if (hasToShowGrid && gridIntensity != 0) {
+		repaint();
+	}
 }
+
+void MandalaPainter::drawGrid(QPainter &painter) {
+	QLine line(0, static_cast<int>(myHeight / 2.),
+			   static_cast<int>(myWidth / 2.), static_cast<int>(myHeight / 2.));
+	double angle = 360.0 / numberSlices;
+	QTransform transform;
+	transform.translate(myWidth / 2., myHeight / 2.).rotate(angle).translate(-myWidth / 2., -myHeight / 2.);
+	painter.setPen(QPen(Qt::gray, 5, Qt::DashLine, Qt::RoundCap, Qt::RoundJoin));
+
+	for(int i = 0; i < numberSlices; i++) {
+		painter.drawLine(line);
+		line  = transform.map(line);
+	}
+
+}
+

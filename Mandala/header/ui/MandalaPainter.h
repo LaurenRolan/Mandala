@@ -28,7 +28,7 @@ public slots:
     void setSlices(int newNumberSlices);
 	void setColorTurning(int colorTurning);
 
-	void setHasToShowGrid(bool hasToShowGrid);
+	void setHasToShowGrid(int hasToShowGrid);
 
 	void setGridIntensity(int gridIntensity);
 
@@ -62,6 +62,7 @@ private:
 	bool hasToShowGrid;
 	int gridIntensity;
 
+	void drawGrid(QPainter &painter);
 };
 
 #endif // MANDALAPAINTER_H
