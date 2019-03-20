@@ -20,10 +20,14 @@ MainWindow::MainWindow(QWidget *parent) :
     mandalaArea = ui->widget;
     mandalaArea->setHeight(360);
     mandalaArea->setWidth(640);
+    scene = new QGraphicsScene();
+
+    ui->lineView->setScene(scene);
 
     connectMenus();
 
     setWindowTitle(tr("Mandala"));
+    onPenWidthChanged(1);
 }
 
 MainWindow::~MainWindow()
@@ -63,6 +67,7 @@ void MainWindow::penColor()
     QColor newColor = QColorDialog::getColor(mandalaArea->penColor());
     if (newColor.isValid()) {
         mandalaArea->setPenColor(newColor);
+        onPenWidthChanged(mandalaArea->getMyPenWidth());
     }
 }
 
@@ -85,6 +90,9 @@ void MainWindow::connectMenus()
     connect(ui->action_Save, SIGNAL(triggered()), this, SLOT(save()));
     connect(ui->action_Open, SIGNAL(triggered()), this, SLOT(open()));
     connect(ui->lineColorButton, SIGNAL(clicked()), this, SLOT(penColor()));
+
+    connect(ui->lineSlider, SIGNAL(valueChanged(int)), mandalaArea, SLOT(setPenWidth(int)));
+    connect(ui->lineSlider, SIGNAL(valueChanged(int)), this, SLOT(onPenWidthChanged(int)));
 
     connect(ui->slicesCount, SIGNAL(valueChanged(int)), mandalaArea, SLOT(setSlices(int)));
 	connect (ui->slicesCountSlider, SIGNAL(valueChanged(int)), mandalaArea, SLOT(setSlices(int)));
@@ -161,4 +169,11 @@ void MainWindow::on_sizeBox_currentIndexChanged(const QString &arg1)
 void MainWindow::setColorTurning(bool newValue) {
     mandalaArea->setColorTurning(newValue);
 
+}
+
+void MainWindow::onPenWidthChanged(int newWidth) {
+    scene->clear();
+    scene->addEllipse(
+            scene->width() / 2. - newWidth, scene->height() / 2. - newWidth, newWidth * 2, newWidth * 2,
+            QPen(mandalaArea->getMyPenColor()), QBrush(mandalaArea->getMyPenColor()));
 }

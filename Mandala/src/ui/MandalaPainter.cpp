@@ -253,3 +253,11 @@ void MandalaPainter::redo() {
 	repaint();
 }
 
+const QColor &MandalaPainter::getMyPenColor() const {
+	return myPenColor;
+}
+
+int MandalaPainter::getMyPenWidth() const {
+	return myPenWidth;
+}
+

@@ -14,7 +14,7 @@ public:
     bool openImage(const QString &fileName);
     bool saveImage(const QString &fileName, const char *fileFormat);
     void setPenColor(const QColor &newColor);
-    void setPenWidth(int newWidth);
+
     void setHeight(int height);
     void setWidth(int width);
 
@@ -27,6 +27,7 @@ public slots:
     void print();
     void setSlices(int newNumberSlices);
 	void setColorTurning(int colorTurning);
+	void setPenWidth(int newWidth);
 
 	void undo();
 	void redo();
@@ -50,11 +51,19 @@ private:
     bool modified;
     bool scribbling;
     int myPenWidth;
-    int numberSlices;
+public:
+	int getMyPenWidth() const;
+
+private:
+	int numberSlices;
     int myWidth;
     int myHeight;
     QColor myPenColor;
-    QImage image;
+public:
+	const QColor &getMyPenColor() const;
+
+private:
+	QImage image;
     QPoint lastPoint;
 
 
