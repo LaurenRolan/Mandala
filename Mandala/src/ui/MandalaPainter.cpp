@@ -16,16 +16,9 @@ MandalaPainter::MandalaPainter(QWidget *parent) : QWidget(parent)
     myPenWidth = 1;
     myPenColor = Qt::blue;
     numberSlices = 2;
+    colorTurning = false;
 
     drawable = new DrawerUtility();
-}
-
-void MandalaPainter::increaseSlices() {
-    numberSlices++;
-}
-
-void MandalaPainter::decreaseSlices() {
-    numberSlices--;
 }
 
 void MandalaPainter::setSlices(int newNumberSlices) {
@@ -135,33 +128,45 @@ void MandalaPainter::drawLineTo(const QPoint &endPoint)
 
 void MandalaPainter::drawLine(QPoint &beginPoint, const QPoint &endPoint) {
     QPainter painter(&image);
-    painter.setPen(QPen(myPenColor, myPenWidth, Qt::SolidLine, Qt::RoundCap,
-                        Qt::RoundJoin));
-    drawable->setColor(myPenColor);
-    drawable->setPenWidth(myPenWidth);
+    QPen pen = QPen(myPenColor, myPenWidth, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
 
     QPoint endPointTmp = endPoint;
 
     double angle = 360.0 / numberSlices;
+	QTransform transform;
+	transform.translate(myWidth / 2., myHeight / 2.).rotate(angle).translate(-myWidth / 2., -myHeight / 2.);
 
-    for(int i = 0; i < numberSlices; i++){
-        painter.drawLine(beginPoint, endPointTmp);
+	int rad = (myPenWidth / 2) + 2;
+
+	int h, s, v, a;
+	myPenColor.getHsv(&h, &s, &v, &a);
+
+	QColor color = myPenColor;
+
+	painter.setPen(pen);
+    for(int i = 0; i < numberSlices; i++) {
+    	if(colorTurning) {
+			color.setHsv(static_cast<int>(h + angle * i), s, v, a);
+			pen.setColor(color);
+			painter.setPen(pen);
+    	}
+
+
+    	painter.drawLine(beginPoint, endPointTmp);
 		drawable->drawLine(beginPoint, endPointTmp);
-        modified = true;
 
-        int rad = (myPenWidth / 2) + 2;
+
         update(QRect(beginPoint, endPointTmp).normalized()
                                          .adjusted(-rad, -rad, +rad, +rad));
-        //
 
-        QTransform transform;
-		transform.translate(myWidth / 2., myHeight / 2.).rotate(angle).translate(-myWidth / 2., -myHeight / 2.);
 
-        beginPoint  = transform.map(beginPoint);
+
+		beginPoint  = transform.map(beginPoint);
 		endPointTmp = transform.map(endPointTmp);
     }
 
 	beginPoint = endPointTmp;
+	modified = true;
 }
 
 
@@ -198,4 +203,16 @@ void MandalaPainter::print()
     #endif // QT_CONFIG(printdialog)
 */
 
+}
+
+void MandalaPainter::setColorTurning(int newValue) {
+	colorTurning = static_cast<bool>(newValue);
+}
+
+void MandalaPainter::setHasToShowGrid(bool hasToShowGrid) {
+	MandalaPainter::hasToShowGrid = hasToShowGrid;
+}
+
+void MandalaPainter::setGridIntensity(int gridIntensity) {
+	MandalaPainter::gridIntensity = gridIntensity;
 }

@@ -25,9 +25,12 @@ public:
 public slots:
     void clearImage();
     void print();
-    void increaseSlices();
-    void decreaseSlices();
     void setSlices(int newNumberSlices);
+	void setColorTurning(int colorTurning);
+
+	void setHasToShowGrid(bool hasToShowGrid);
+
+	void setGridIntensity(int gridIntensity);
 
 protected:
     void mousePressEvent(QMouseEvent *event) override;
@@ -53,6 +56,11 @@ private:
 
 
     Drawable *drawable;
+
+	bool colorTurning;
+
+	bool hasToShowGrid;
+	int gridIntensity;
 
 };
 

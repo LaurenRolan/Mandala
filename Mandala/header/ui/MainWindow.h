@@ -27,6 +27,8 @@ private slots:
     void resizeImage(const QString & newSize);
     void slicesChanged(QString slicesText);
 
+    void setColorTurning(bool);
+
     void on_lineSlider_sliderMoved(int position);
 
     void on_sizeBox_currentIndexChanged(const QString &arg1);

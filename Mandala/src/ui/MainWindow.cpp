@@ -6,12 +6,14 @@
 #include <QInputDialog>
 #include <QMessageBox>
 #include <iostream>
+#include <header/ui/MainWindow.h>
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {    //To show the menu in the application
-    QCoreApplication::setAttribute(Qt::AA_DontUseNativeMenuBar);
+    //QCoreApplication::setAttribute(Qt::AA_DontUseNativeMenuBar);
 
     ui->setupUi(this);
 
@@ -80,20 +82,27 @@ void MainWindow::about()
 
 void MainWindow::connectMenus()
 {
-    connect(ui->action_Save, SIGNAL(triggered()),
-            this, SLOT(save()));
-    connect(ui->action_Open, SIGNAL(triggered()),
-            this, SLOT(open()));
-    connect(ui->clearButton, SIGNAL(clicked()),
-            mandalaArea, SLOT(clearImage()));
-    connect(ui->lineColorButton, SIGNAL(clicked()),
-            this, SLOT(penColor()));
+    connect(ui->action_Save, SIGNAL(triggered()), this, SLOT(save()));
+    connect(ui->action_Open, SIGNAL(triggered()), this, SLOT(open()));
+    connect(ui->lineColorButton, SIGNAL(clicked()), this, SLOT(penColor()));
+
+    connect(ui->slicesCount, SIGNAL(valueChanged(int)), mandalaArea, SLOT(setSlices(int)));
+    connect(ui->colorChanging, SIGNAL(stateChanged(int)), mandalaArea, SLOT(setColorTurning(int)));
+    connect(ui->clearButton, SIGNAL(clicked()), mandalaArea, SLOT(clearImage()));
+
+    connect (ui->slicesCount, SIGNAL(valueChanged(int)), ui->slicesCountSlider, SLOT(setValue(int)));
+    connect (ui->slicesCountSlider, SIGNAL(valueChanged(int)), ui->slicesCount, SLOT(setValue(int)));
+
+    /*
     connect(ui->addSliceButton, SIGNAL(clicked()),
             mandalaArea, SLOT(increaseSlices()));
     connect(ui->removeSliceButton, SIGNAL(clicked()),
             mandalaArea, SLOT(decreaseSlices()));
     connect(ui->slicesEdit, SIGNAL(textChanged(QString)),
             this, SLOT(slicesChanged(QString)));
+    */
+
+
 }
 
 void MainWindow::resizeImage(const QString & newSize) {
@@ -154,4 +163,9 @@ void MainWindow::on_sizeBox_currentIndexChanged(const QString &arg1)
 
 void MainWindow::slicesChanged(QString slicesText) {
     //TODO
+}
+
+void MainWindow::setColorTurning(bool newValue) {
+    mandalaArea->setColorTurning(newValue);
+
 }
