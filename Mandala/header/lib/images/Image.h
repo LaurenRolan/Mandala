@@ -10,8 +10,20 @@ public:
     Image();
 
     void drawForm(Form *f);
+    void setDimension(int w, int h);
+
+    void undo();
+    void redo();
+
+	const QPoint &getDimension() const;
+
+	void clear();
+
+	void drawAll(QPainter &painter);
+
 private:
     FormList *_forms;
+    QPoint dimension;
 
 };
 

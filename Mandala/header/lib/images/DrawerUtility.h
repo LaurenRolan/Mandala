@@ -6,21 +6,33 @@
 #define MANDALA_DRAWERUTILITY_H
 
 #include <QPoint>
+#include <lib/images/forms/FormSet.h>
 
 #include "Image.h"
 
 #include "Drawable.h"
 
-class DrawerUtility : Drawable {
+class DrawerUtility : public Drawable {
 public:
 	DrawerUtility();
 	void onDraw(QPoint &p) override;
-	void drawLine(QPoint &origin, QPoint &extremity) override;
+	void drawLine(QPoint &origin, const QPoint &extremity) override;
+	void clear() override;
 	void setColor(QColor &color) override;
-	Image  getImage();
-	Image& getImageReference();
+
+	void setPenWidth(int penWidth) override;
+
+	void beginForm() override;
+	void endForm() override;
+
+	QImage & getResult(int width, int height) override;
+
 private:
+	void drawForm(Form *f);
+
+	FormSet* currentFormSet;
 	QColor color;
+	int penWidth;
 	Image *image;
 };
 

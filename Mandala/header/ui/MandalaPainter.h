@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QMouseEvent>
+#include <header/lib/images/Drawable.h>
 
 class MandalaPainter : public QWidget
 {
@@ -49,6 +50,10 @@ private:
     QColor myPenColor;
     QImage image;
     QPoint lastPoint;
+
+
+    Drawable *drawable;
+
 };
 
 #endif // MANDALAPAINTER_H

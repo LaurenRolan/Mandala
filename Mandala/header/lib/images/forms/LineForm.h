@@ -8,17 +8,19 @@
 
 #include <QtGui/QColor>
 #include <QtCore/QPoint>
+#include <QtGui/QPainter>
 
 #include "Form.h"
 
 class LineForm : public Form {
 
 public:
-	LineForm(QColor color, QPoint &origin, QPoint &extremity);
-	void draw() override;
+	LineForm(const QColor &color, int penWidth, const QPoint &origin, const QPoint &extremity);
+	void draw(QPainter &painter) override;
 
 private:
 	QColor color;
+	int penWidth;
 	QPoint origin;
 	QPoint extremity;
 };

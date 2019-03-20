@@ -25,3 +25,15 @@ void FormList::undo() {
         _index--;
     }
 }
+
+void FormList::clear() {
+    _data->clear();
+    _index = 0;
+    _maxIndex = 0;
+}
+
+void FormList::drawAll(QPainter &painter) {
+	for(auto *f :  *_data) {
+		f->draw(painter);
+	}
+}

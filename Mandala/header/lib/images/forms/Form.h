@@ -5,8 +5,9 @@
 #include <functional>
 
 #include <lib/images/Pixel.h>
+#include <QtGui/QPainter>
 
-typedef std::function<void(void)> drawer;
+
 
 
 class Form;
@@ -22,6 +23,10 @@ public:
     void undo();
     void redo();
 
+	void clear();
+
+	void drawAll(QPainter &painter);
+
 private:
     std::vector<Form*> *_data;
     int _index = 0;
@@ -32,7 +37,7 @@ private:
 class Form
 {
 public:
-    virtual void draw() = 0;
+    virtual void draw(QPainter &painter) = 0;
 };
 
 #endif // FORM_H

@@ -12,7 +12,7 @@
 class PixelForm : public Form {
 public:
 	PixelForm(QColor color, QPoint pixel);
-	void draw() override;
+	void draw(QPainter &painter) override;
 
 private:
 	QColor color;

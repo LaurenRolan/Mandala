@@ -11,6 +11,7 @@ PixelForm::PixelForm(QColor color, QPoint pixel) {
 
 }
 
-void PixelForm::draw() {
-
+void PixelForm::draw(QPainter &painter) {
+	painter.setPen(color);
+	painter.drawPoint(this->pos);
 }

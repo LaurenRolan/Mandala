@@ -3,6 +3,7 @@
 #include <QPrinter>
 #include <QPrintDialog>
 #include <iostream>
+#include <header/lib/images/DrawerUtility.h>
 
 
 #define PI 3.14159265
@@ -15,6 +16,8 @@ MandalaPainter::MandalaPainter(QWidget *parent) : QWidget(parent)
     myPenWidth = 1;
     myPenColor = Qt::blue;
     numberSlices = 2;
+
+    drawable = new DrawerUtility();
 }
 
 void MandalaPainter::increaseSlices() {
@@ -49,6 +52,8 @@ bool MandalaPainter::saveImage(const QString &fileName, const char *fileFormat)
     QImage visibleImage = image;
     resizeImage(&visibleImage, size());
 
+    drawable->getResult(myWidth, myHeight).save("test", "png");
+
     if (visibleImage.save(fileName, fileFormat)) {
         modified = false;
         return true;
@@ -78,6 +83,7 @@ void MandalaPainter::setWidth(int width) {
 void MandalaPainter::clearImage()
 {
     image.fill(qRgb(255, 255, 255));
+    drawable->clear();
     modified = true;
     update();
 }
@@ -131,6 +137,8 @@ void MandalaPainter::drawLine(QPoint &beginPoint, const QPoint &endPoint) {
     QPainter painter(&image);
     painter.setPen(QPen(myPenColor, myPenWidth, Qt::SolidLine, Qt::RoundCap,
                         Qt::RoundJoin));
+    drawable->setColor(myPenColor);
+    drawable->setPenWidth(myPenWidth);
 
     double angle = 360.0 / numberSlices;
 
@@ -138,6 +146,7 @@ void MandalaPainter::drawLine(QPoint &beginPoint, const QPoint &endPoint) {
         //painter.translate(QPoint(myWidth / 2, myHeight / 2));
         //painter.rotate(angle);
         painter.drawLine(beginPoint, endPoint);
+		drawable->drawLine(beginPoint, endPoint);
         modified = true;
 
         int rad = (myPenWidth / 2) + 2;
