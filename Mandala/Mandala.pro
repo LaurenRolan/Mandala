@@ -6,19 +6,28 @@
 
 QT       += core gui printsupport
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 5): QT += widgets
+
+CONFIG += c++11;
+
+QMAKE_CXXFLAGS += -std=c++0x
 
 TARGET = Mandala
 TEMPLATE = app
 
-INCLUDEPATH = ./header
+INCLUDEPATH = ./header/ui
 
 SOURCES += src/main.cpp\
-    src/ui/mainwindow.cpp
+    src/ui/MainWindow.cpp \
+    src/lib/images/Image.cpp \
+    src/lib/images/Form.cpp \
     src/ui/MandalaPainter.cpp
 
-HEADERS  +=  header/ui/mainwindow.h \
+HEADERS  +=  header/ui/MainWindow.h \
+    header/lib/command/command.h \
+    header/lib/images/Image.h \
+    header/lib/images/Form.h \
     header/ui/MandalaPainter.h
 
 FORMS    += \
-    src/ui/mainwindow.ui
+    src/ui/MainWindow.ui

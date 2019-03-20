@@ -14,6 +14,8 @@ public:
     bool saveImage(const QString &fileName, const char *fileFormat);
     void setPenColor(const QColor &newColor);
     void setPenWidth(int newWidth);
+    void setHeight(int height);
+    void setWidth(int width);
 
     bool isModified() const { return modified; }
     QColor penColor() const { return myPenColor; }
@@ -22,6 +24,9 @@ public:
 public slots:
     void clearImage();
     void print();
+    void increaseSlices();
+    void decreaseSlices();
+    void setSlices(int newNumberSlices);
 
 protected:
     void mousePressEvent(QMouseEvent *event) override;
@@ -32,11 +37,15 @@ protected:
 
 private:
     void drawLineTo(const QPoint &endPoint);
+    void drawLine(QPoint &beginPoint, const QPoint &endPoint);
     void resizeImage(QImage *image, const QSize &newSize);
 
     bool modified;
     bool scribbling;
     int myPenWidth;
+    int numberSlices;
+    int myWidth;
+    int myHeight;
     QColor myPenColor;
     QImage image;
     QPoint lastPoint;

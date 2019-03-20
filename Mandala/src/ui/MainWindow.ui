@@ -130,7 +130,7 @@
       <string>Grid intensity</string>
      </property>
     </widget>
-    <widget class="QComboBox" name="comboBox">
+    <widget class="QComboBox" name="sizeBox">
      <property name="geometry">
       <rect>
        <x>460</x>
@@ -205,10 +205,10 @@
     <widget class="MandalaPainter" name="widget" native="true">
      <property name="geometry">
       <rect>
-       <x>130</x>
+       <x>50</x>
        <y>0</y>
-       <width>481</width>
-       <height>371</height>
+       <width>640</width>
+       <height>360</height>
       </rect>
      </property>
     </widget>
@@ -304,7 +304,7 @@
      <x>0</x>
      <y>0</y>
      <width>772</width>
-     <height>22</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

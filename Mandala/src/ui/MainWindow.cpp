@@ -1,24 +1,24 @@
-#include "header/ui/mainwindow.h"
-#include "ui_mainwindow.h"
+#include "header/ui/MainWindow.h"
+#include "ui_MainWindow.h"
 #include <QFileDialog>
 #include <QDir>
 #include <QColorDialog>
 #include <QInputDialog>
 #include <QMessageBox>
+#include <iostream>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
-{
-    //To allow use of keyboard
-    setFocusPolicy(Qt::StrongFocus);
-
-    //To show the menu in the application
+{    //To show the menu in the application
     QCoreApplication::setAttribute(Qt::AA_DontUseNativeMenuBar);
 
     ui->setupUi(this);
 
-    mandalaArea = new MandalaPainter;
+    mandalaArea = ui->widget;
+    mandalaArea->setHeight(360);
+    mandalaArea->setWidth(640);
+
     connectMenus();
 
     setWindowTitle(tr("Mandala"));
@@ -59,8 +59,9 @@ void MainWindow::save()
 void MainWindow::penColor()
 {
     QColor newColor = QColorDialog::getColor(mandalaArea->penColor());
-    if (newColor.isValid())
+    if (newColor.isValid()) {
         mandalaArea->setPenColor(newColor);
+    }
 }
 
 void MainWindow::penWidth(int width)
@@ -85,16 +86,31 @@ void MainWindow::connectMenus()
             this, SLOT(open()));
     connect(ui->clearButton, SIGNAL(clicked()),
             mandalaArea, SLOT(clearImage()));
-    connect(ui->lineSlider, SIGNAL(sliderMoved(int)),
-            this, SLOT(penWidth(int);));
+    connect(ui->lineColorButton, SIGNAL(clicked()),
+            this, SLOT(penColor()));
+    connect(ui->addSliceButton, SIGNAL(clicked()),
+            mandalaArea, SLOT(increaseSlices()));
+    connect(ui->removeSliceButton, SIGNAL(clicked()),
+            mandalaArea, SLOT(decreaseSlices()));
+    connect(ui->slicesEdit, SIGNAL(textChanged(QString)),
+            this, SLOT(slicesChanged(QString)));
 }
 
+void MainWindow::resizeImage(const QString & newSize) {
+    int xIndex = newSize.indexOf('x');
+    QString stringWidth = newSize.mid(0, xIndex);
+    QString stringHeight = newSize.mid(xIndex + 1);
+    mandalaArea->setHeight(stringHeight.toInt());
+    mandalaArea->setWidth(stringWidth.toInt());
+    mandalaArea->resize(stringWidth.toInt(), stringHeight.toInt());
+    adjustSize();
+}
 
 bool MainWindow::maybeSave()
 {
     if (mandalaArea->isModified()) {
        QMessageBox::StandardButton ret;
-       ret = QMessageBox::warning(this, tr("Scribble"),
+       ret = QMessageBox::warning(this, tr("Mandala"),
                           tr("The image has been modified.\n"
                              "Do you want to save your changes?"),
                           QMessageBox::Save | QMessageBox::Discard
@@ -125,3 +141,17 @@ bool MainWindow::saveFile(const QByteArray &fileFormat)
     }
 }
 
+
+void MainWindow::on_lineSlider_sliderMoved(int position)
+{
+    penWidth(position);
+}
+
+void MainWindow::on_sizeBox_currentIndexChanged(const QString &arg1)
+{
+    resizeImage(arg1);
+}
+
+void MainWindow::slicesChanged(QString slicesText) {
+    //TODO
+}

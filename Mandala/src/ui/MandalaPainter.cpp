@@ -2,6 +2,10 @@
 #include <QPainter>
 #include <QPrinter>
 #include <QPrintDialog>
+#include <iostream>
+
+
+#define PI 3.14159265
 
 MandalaPainter::MandalaPainter(QWidget *parent) : QWidget(parent)
 {
@@ -10,7 +14,21 @@ MandalaPainter::MandalaPainter(QWidget *parent) : QWidget(parent)
     scribbling = false;
     myPenWidth = 1;
     myPenColor = Qt::blue;
+    numberSlices = 2;
 }
+
+void MandalaPainter::increaseSlices() {
+    numberSlices++;
+}
+
+void MandalaPainter::decreaseSlices() {
+    numberSlices--;
+}
+
+void MandalaPainter::setSlices(int newNumberSlices) {
+    numberSlices = newNumberSlices;
+}
+
 
 bool MandalaPainter::openImage(const QString &fileName)
 {
@@ -47,6 +65,14 @@ void MandalaPainter::setPenColor(const QColor &newColor)
 void MandalaPainter::setPenWidth(int newWidth)
 {
     myPenWidth = newWidth;
+}
+
+void MandalaPainter::setHeight(int height) {
+    myHeight = height;
+}
+
+void MandalaPainter::setWidth(int width) {
+    myWidth = width;
 }
 
 void MandalaPainter::clearImage()
@@ -98,16 +124,30 @@ void MandalaPainter::resizeEvent(QResizeEvent *event)
 
 void MandalaPainter::drawLineTo(const QPoint &endPoint)
 {
+    drawLine(lastPoint, endPoint);
+}
+
+void MandalaPainter::drawLine(QPoint &beginPoint, const QPoint &endPoint) {
     QPainter painter(&image);
     painter.setPen(QPen(myPenColor, myPenWidth, Qt::SolidLine, Qt::RoundCap,
                         Qt::RoundJoin));
-    painter.drawLine(lastPoint, endPoint);
-    modified = true;
 
-    int rad = (myPenWidth / 2) + 2;
-    update(QRect(lastPoint, endPoint).normalized()
-                                     .adjusted(-rad, -rad, +rad, +rad));
-    lastPoint = endPoint;
+    double angle = 360.0 / numberSlices;
+
+    for(int i = 0; i < numberSlices; i++){
+        //painter.translate(QPoint(myWidth / 2, myHeight / 2));
+        //painter.rotate(angle);
+        painter.drawLine(beginPoint, endPoint);
+        modified = true;
+
+        int rad = (myPenWidth / 2) + 2;
+        update(QRect(beginPoint, endPoint).normalized()
+                                         .adjusted(-rad, -rad, +rad, +rad));
+        beginPoint = endPoint;
+
+        //Partie pour la rotation
+        //painter.translate(QPoint(-myWidth / 2, -myHeight / 2));
+    }
 }
 
 
@@ -125,8 +165,12 @@ void MandalaPainter::resizeImage(QImage *image, const QSize &newSize)
 
 void MandalaPainter::print()
 {
+<<<<<<< HEAD
     /*
     #if QT_CONFIG(printdialog)
+=======
+    //#if QT_CONFIG(printdialog)
+>>>>>>> 2f1bdde60e5469b24b236a82cb4922f598e8c3d1
     QPrinter printer(QPrinter::HighResolution);
 
     QPrintDialog printDialog(&printer, this);
@@ -139,6 +183,10 @@ void MandalaPainter::print()
            painter.setWindow(image.rect());
            painter.drawImage(0, 0, image);
        }
+<<<<<<< HEAD
     #endif // QT_CONFIG(printdialog)
 */
+=======
+    //#endif // QT_CONFIG(printdialog)
+>>>>>>> 2f1bdde60e5469b24b236a82cb4922f598e8c3d1
 }
