@@ -144,10 +144,10 @@ void MandalaPainter::drawLine(QPoint &beginPoint, const QPoint &endPoint) {
 	QTransform rotateTransform;
 	rotateTransform.translate(myWidth / 2., myHeight / 2.).rotate(angle).translate(- myWidth / 2., - myHeight / 2.);
 
-	QTransform symetryTransform;
-	symetryTransform.translate(myWidth / 2., myHeight / 2.).rotate(angle + angle / 2.).rotate(180., Qt::YAxis).translate(- myWidth / 2., - myHeight / 2.);
 
-	int rad = (myPenWidth / 2) + 2;
+	// TODO : make it work
+	QTransform symetryTransform;
+	symetryTransform.translate(myWidth / 2., myHeight / 2.).rotate(angle / 2.).rotate(180., Qt::XAxis).translate(- myWidth / 2., - myHeight / 2.);
 
 	int h, s, v, a;
 	myPenColor.getHsv(&h, &s, &v, &a);
@@ -164,13 +164,10 @@ void MandalaPainter::drawLine(QPoint &beginPoint, const QPoint &endPoint) {
 			drawable->setColor(color);
     	}
 
-
     	painter.drawLine(beginPoint, endPointTmp);
 		drawable->drawLine(beginPoint, endPointTmp);
 
-
 		if (mirroring) {
-
 			QPoint beginPointMirroring, endPointMirroring;
 
 			beginPointMirroring = symetryTransform.map(beginPoint);
@@ -178,16 +175,12 @@ void MandalaPainter::drawLine(QPoint &beginPoint, const QPoint &endPoint) {
 
 			painter.drawLine(beginPointMirroring, endPointMirroring);
 			drawable->drawLine(beginPointMirroring, endPointMirroring);
-
 		}
 
 		beginPoint  = rotateTransform.map(beginPoint);
 		endPointTmp = rotateTransform.map(endPointTmp);
 
     }
-
-
-
 
 	beginPoint = endPointTmp;
 	modified = true;
@@ -255,6 +248,18 @@ void MandalaPainter::drawGrid(QPainter &painter) {
 	for(int i = 0; i < numberSlices; i++) {
 		painter.drawLine(line);
 		line  = transform.map(line);
+	}
+
+	if (mirroring) {
+		QTransform simpleTransform;
+		simpleTransform.translate(myWidth / 2., myHeight / 2.).rotate(angle / 2.).translate(-myWidth / 2., -myHeight / 2.);
+		QLine mirroringLine = simpleTransform.map(line);
+
+		painter.setPen(QPen(Qt::gray, 2, Qt::DashLine, Qt::RoundCap, Qt::RoundJoin));
+		for(int i = 0; i < numberSlices; i++) {
+			painter.drawLine(mirroringLine);
+			mirroringLine  = transform.map(mirroringLine);
+		}
 	}
 
 }
