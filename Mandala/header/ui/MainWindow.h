@@ -26,6 +26,7 @@ private slots:
     void about();
     void resizeImage(const QString & newSize);
 
+
     void setColorTurning(bool);
 
     void on_lineSlider_sliderMoved(int position);

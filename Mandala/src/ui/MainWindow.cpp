@@ -13,7 +13,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {    //To show the menu in the application
-    //QCoreApplication::setAttribute(Qt::AA_DontUseNativeMenuBar);
+    QCoreApplication::setAttribute(Qt::AA_DontUseNativeMenuBar);
 
     ui->setupUi(this);
 
@@ -95,19 +95,11 @@ void MainWindow::connectMenus()
     connect(ui->showGridBox, SIGNAL(stateChanged(int)), mandalaArea, SLOT(setHasToShowGrid(int)));
     connect(ui->gridIntensitySLider, SIGNAL(valueChanged(int)), mandalaArea, SLOT(setGridIntensity(int)));
 
-    connect (ui->slicesCount, SIGNAL(valueChanged(int)), ui->slicesCountSlider, SLOT(setValue(int)));
-    connect (ui->slicesCountSlider, SIGNAL(valueChanged(int)), ui->slicesCount, SLOT(setValue(int)));
+    connect(ui->slicesCount, SIGNAL(valueChanged(int)), ui->slicesCountSlider, SLOT(setValue(int)));
+    connect(ui->slicesCountSlider, SIGNAL(valueChanged(int)), ui->slicesCount, SLOT(setValue(int)));
 
-    /*
-    connect(ui->addSliceButton, SIGNAL(clicked()),
-            mandalaArea, SLOT(increaseSlices()));
-    connect(ui->removeSliceButton, SIGNAL(clicked()),
-            mandalaArea, SLOT(decreaseSlices()));
-    connect(ui->slicesEdit, SIGNAL(textChanged(QString)),
-            this, SLOT(slicesChanged(QString)));
-    */
-
-
+    connect(ui->actionRedo, SIGNAL(triggered()), mandalaArea, SLOT(redo()));
+    connect(ui->actionUndo, SIGNAL(triggered()), mandalaArea, SLOT(undo()));
 }
 
 void MainWindow::resizeImage(const QString & newSize) {

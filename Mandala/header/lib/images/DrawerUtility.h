@@ -20,6 +20,9 @@ public:
 	void clear() override;
 	void setColor(QColor &color) override;
 
+	void undo() override;
+	void redo() override;
+
 	void setPenWidth(int penWidth) override;
 
 	void beginForm() override;

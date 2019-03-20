@@ -12,7 +12,7 @@ void FormList::addForm(Form *f) {
 
 void FormList::redo() {
     if (_index > _maxIndex) {
-        throw "Can't redo the action if there is no action to redo";
+        //throw "Can't redo the action if there is no action to redo";
     } else {
         _index++;
     }
@@ -20,7 +20,7 @@ void FormList::redo() {
 
 void FormList::undo() {
     if (_index == 0) {
-        throw "Can't undo the action if there is no action to undo";
+        //throw "Can't undo the action if there is no action to undo";
     } else {
         _index--;
     }
@@ -33,7 +33,12 @@ void FormList::clear() {
 }
 
 void FormList::drawAll(QPainter &painter) {
+
+    for (int i = 0; i < _index; i++) {
+        (*_data)[i]->draw(painter);
+    }
+    /*
 	for(auto *f :  *_data) {
 		f->draw(painter);
-	}
+	}*/
 }

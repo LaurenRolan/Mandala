@@ -28,6 +28,9 @@ public slots:
     void setSlices(int newNumberSlices);
 	void setColorTurning(int colorTurning);
 
+	void undo();
+	void redo();
+
 	void setHasToShowGrid(int hasToShowGrid);
 
 	void setGridIntensity(int gridIntensity);

@@ -5,9 +5,12 @@
 #include <lib/images/DrawerUtility.h>
 #include <lib/images/forms/PixelForm.h>
 #include <lib/images/forms/LineForm.h>
+#include <header/lib/images/DrawerUtility.h>
+
 
 DrawerUtility::DrawerUtility() {
 	image = new Image();
+	currentFormSet = nullptr;
 }
 
 void DrawerUtility::onDraw(QPoint &p) {
@@ -24,15 +27,15 @@ void DrawerUtility::setColor(QColor &color) {
 
 void DrawerUtility::beginForm() {
 	if(currentFormSet != nullptr) {
-		throw "Already a form set initialized";
+		//throw "Already a form set initialized";
 	}
 
-	//currentFormSet = new FormSet();
+	currentFormSet = new FormSet();
 }
 
 void DrawerUtility::endForm() {
 	if (currentFormSet == nullptr) {
-		throw "No form set initialized";
+		//throw "No form set initialized";
 	}
 
 	image->drawForm(currentFormSet);
@@ -41,6 +44,7 @@ void DrawerUtility::endForm() {
 
 QImage & DrawerUtility::getResult(int width, int height) {
 	QImage *image = new QImage(width, height, QImage::Format_RGB32);
+	image->fill(qRgb(255, 255, 255));
 
 	QPainter painter(image);
 
@@ -53,7 +57,7 @@ void DrawerUtility::drawForm(Form *f) {
 	if (currentFormSet == nullptr) {
 		image->drawForm(f);
 	} else {
-		//currentFormSet->addForm(f);
+		currentFormSet->addForm(f);
 	}
 }
 
@@ -63,4 +67,12 @@ void DrawerUtility::clear() {
 
 void DrawerUtility::setPenWidth(int penWidth) {
 	DrawerUtility::penWidth = penWidth;
+}
+
+void DrawerUtility::undo() {
+	image->undo();
+}
+
+void DrawerUtility::redo() {
+	image->redo();
 }

@@ -4,6 +4,7 @@
 #include <QPrintDialog>
 #include <iostream>
 #include <header/lib/images/DrawerUtility.h>
+#include <header/ui/MandalaPainter.h>
 
 
 #define PI 3.14159265
@@ -47,8 +48,6 @@ bool MandalaPainter::saveImage(const QString &fileName, const char *fileFormat)
     QImage visibleImage = image;
     resizeImage(&visibleImage, size());
 
-    drawable->getResult(myWidth, myHeight).save("test", "png");
-
     if (visibleImage.save(fileName, fileFormat)) {
         modified = false;
         return true;
@@ -88,6 +87,7 @@ void MandalaPainter::mousePressEvent(QMouseEvent *event)
     if (event->button() == Qt::LeftButton) {
         lastPoint = event->pos();
         scribbling = true;
+        drawable->beginForm();
     }
 }
 
@@ -102,6 +102,7 @@ void MandalaPainter::mouseReleaseEvent(QMouseEvent *event)
     if (event->button() == Qt::LeftButton && scribbling) {
         drawLineTo(event->pos());
         scribbling = false;
+        drawable->endForm();
     }
 }
 
@@ -140,7 +141,7 @@ void MandalaPainter::drawLine(QPoint &beginPoint, const QPoint &endPoint) {
 
     double angle = 360.0 / numberSlices;
 	QTransform transform;
-	transform.translate(myWidth / 2., myHeight / 2.).rotate(angle).translate(-myWidth / 2., -myHeight / 2.);
+	transform.translate(myWidth / 2., myHeight / 2.).rotate(angle).translate(- myWidth / 2., - myHeight / 2.);
 
 	int rad = (myPenWidth / 2) + 2;
 
@@ -148,28 +149,27 @@ void MandalaPainter::drawLine(QPoint &beginPoint, const QPoint &endPoint) {
 	myPenColor.getHsv(&h, &s, &v, &a);
 
 	QColor color = myPenColor;
-
+	//drawable->beginForm();
+	drawable->setColor(color);
 	painter.setPen(pen);
     for(int i = 0; i < numberSlices; i++) {
     	if(colorTurning) {
 			color.setHsv(static_cast<int>(h + angle * i), s, v, a);
 			pen.setColor(color);
 			painter.setPen(pen);
+			drawable->setColor(color);
     	}
 
 
     	painter.drawLine(beginPoint, endPointTmp);
 		drawable->drawLine(beginPoint, endPointTmp);
 
-
-        //update(QRect(beginPoint, endPointTmp).normalized()
-        //                                 .adjusted(-rad, -rad, +rad, +rad));
-
-
-
 		beginPoint  = transform.map(beginPoint);
 		endPointTmp = transform.map(endPointTmp);
     }
+
+	//drawable->endForm();
+
 
 	beginPoint = endPointTmp;
 	modified = true;
@@ -218,18 +218,12 @@ void MandalaPainter::setColorTurning(int newValue) {
 
 void MandalaPainter::setHasToShowGrid(int hasToShowGrid) {
 	MandalaPainter::hasToShowGrid = static_cast<bool>(hasToShowGrid);
-
-	if (hasToShowGrid) {
-		repaint();
-	}
+	repaint();
 }
 
 void MandalaPainter::setGridIntensity(int gridIntensity) {
 	MandalaPainter::gridIntensity = gridIntensity;
-
-	if (hasToShowGrid && gridIntensity != 0) {
-		repaint();
-	}
+	repaint();
 }
 
 void MandalaPainter::drawGrid(QPainter &painter) {
@@ -245,5 +239,17 @@ void MandalaPainter::drawGrid(QPainter &painter) {
 		line  = transform.map(line);
 	}
 
+}
+
+void MandalaPainter::undo() {
+	drawable->undo();
+	image = drawable->getResult(image.width(), image.height());
+	repaint();
+}
+
+void MandalaPainter::redo() {
+	drawable->redo();
+	image = drawable->getResult(image.width(), image.height());
+	repaint();
 }
 

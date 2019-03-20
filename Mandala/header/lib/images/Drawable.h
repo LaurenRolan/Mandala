@@ -17,6 +17,8 @@ public:
 	virtual void setColor(QColor &color) = 0;
 	virtual void setPenWidth(int penWidth) = 0;
 	virtual void clear() = 0;
+	virtual void undo() = 0;
+	virtual void redo() = 0;
 
 	virtual void beginForm() = 0;
 	virtual void endForm() = 0;
