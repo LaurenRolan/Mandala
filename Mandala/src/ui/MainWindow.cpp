@@ -119,9 +119,15 @@ void MainWindow::resizeImage(const QString & newSize) {
     int xIndex = newSize.indexOf('x');
     QString stringWidth = newSize.mid(0, xIndex);
     QString stringHeight = newSize.mid(xIndex + 1);
-    mandalaArea->setHeight(stringHeight.toInt());
-    mandalaArea->setWidth(stringWidth.toInt());
-    mandalaArea->resize(stringWidth.toInt(), stringHeight.toInt());
+
+
+	int height = stringHeight.toInt();
+	
+	
+	mandalaArea->setHeight(height);
+	int width = stringWidth.toInt();
+	mandalaArea->setWidth(width);
+    mandalaArea->resize(width, height);
     ui->frame_2->resize(width + 128, height + 10);
     resize(width + 128, height + 400);
     //adjustSize();
