@@ -150,8 +150,11 @@ void MandalaPainter::drawLine(QPoint &beginPoint, const QPoint &endPoint) {
 
 	// TODO : make it work
 	QTransform symmetryTransform;
-	symmetryTransform.rotate(180).translate(-myWidth, 0);
-
+	if(numberSlices & 1 == 0) {
+		symmetryTransform.rotate(180).translate(-myWidth, 0);
+	} else {
+		symmetryTransform.rotate(180).translate(-myWidth, 0);
+	}
 
 	int h, s, v, a;
 	myPenColor.getHsv(&h, &s, &v, &a);
