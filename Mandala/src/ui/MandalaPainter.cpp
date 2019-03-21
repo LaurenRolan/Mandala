@@ -19,6 +19,7 @@ MandalaPainter::MandalaPainter(QWidget *parent) : QWidget(parent)
     numberSlices = 2;
     colorTurning = false;
     hasToShowGrid = false;
+    gridIntensity = 100;
     mirroring = false;
 
     drawable = new DrawerUtility();
@@ -109,7 +110,7 @@ void MandalaPainter::mouseReleaseEvent(QMouseEvent *event)
 
 void MandalaPainter::paintEvent(QPaintEvent *event)
 {
-    QPainter painter(this);
+	QPainter painter(this);
     QRect dirtyRect = event->rect();
     painter.drawImage(dirtyRect, image, dirtyRect);
 
@@ -147,13 +148,6 @@ void MandalaPainter::drawLine(QPoint &beginPoint, const QPoint &endPoint) {
 
 	// TODO : make it work
 	QTransform symmetryTransform;
-	if(numberSlices == 2) {
-		symmetryTransform.translate(myWidth / 2., myHeight / 2.).rotate(180, Qt::YAxis).translate(- myWidth / 2., - myHeight / 2.);
-	} else {
-		symmetryTransform.translate(myWidth / 2., myHeight / 2.).rotate(angle / (numberSlices - 1.)).rotate(180, Qt::YAxis).translate(- myWidth / 2., - myHeight / 2.);
-	}
-
-	//rotateTransform.translate(myWidth / 2., myHeight / 2.).rotate(angle).rotate(180, Qt::YAxis).translate(- myWidth / 2., - myHeight / 2.);
 
 	int h, s, v, a;
 	myPenColor.getHsv(&h, &s, &v, &a);
@@ -175,6 +169,12 @@ void MandalaPainter::drawLine(QPoint &beginPoint, const QPoint &endPoint) {
 
 		if (mirroring) {
 			QPoint beginPointMirroring, endPointMirroring;
+
+			if(numberSlices == 2) {
+				symmetryTransform.translate(myWidth / 2., myHeight / 2.).rotate(180, Qt::YAxis).translate(- myWidth / 2., - myHeight / 2.);
+			} else {
+				symmetryTransform.translate(myWidth / 2., myHeight / 2.).rotate(180, Qt::XAxis).translate(- myWidth / 2., - myHeight / 2.);
+			}
 
 			beginPointMirroring = symmetryTransform.map(beginPoint);
 			endPointMirroring   = symmetryTransform.map(endPointTmp);
@@ -235,6 +235,7 @@ void MandalaPainter::setColorTurning(int newValue) {
 
 void MandalaPainter::setHasToShowGrid(int hasToShowGrid) {
 	MandalaPainter::hasToShowGrid = static_cast<bool>(hasToShowGrid);
+	std::cout << "Test" << std::endl;
 	repaint();
 }
 
@@ -249,7 +250,11 @@ void MandalaPainter::drawGrid(QPainter &painter) {
 	double angle = 360.0 / numberSlices;
 	QTransform transform;
 	transform.translate(myWidth / 2., myHeight / 2.).rotate(angle).translate(-myWidth / 2., -myHeight / 2.);
-	painter.setPen(QPen(Qt::gray, 5, Qt::DashLine, Qt::RoundCap, Qt::RoundJoin));
+	QColor color(Qt::gray);
+	color.setAlpha(static_cast<int>(gridIntensity / 100. * 255));
+
+	painter.setPen(QPen(color, 5, Qt::DashLine, Qt::RoundCap, Qt::RoundJoin));
+
 
 	for(int i = 0; i < numberSlices; i++) {
 		painter.drawLine(line);
@@ -261,7 +266,7 @@ void MandalaPainter::drawGrid(QPainter &painter) {
 		simpleTransform.translate(myWidth / 2., myHeight / 2.).rotate(angle / 2.).translate(-myWidth / 2., -myHeight / 2.);
 		QLine mirroringLine = simpleTransform.map(line);
 
-		painter.setPen(QPen(Qt::gray, 2, Qt::DashLine, Qt::RoundCap, Qt::RoundJoin));
+		painter.setPen(QPen(color, 2, Qt::DashLine, Qt::RoundCap, Qt::RoundJoin));
 		for(int i = 0; i < numberSlices; i++) {
 			painter.drawLine(mirroringLine);
 			mirroringLine  = transform.map(mirroringLine);
