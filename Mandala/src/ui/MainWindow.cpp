@@ -7,13 +7,14 @@
 #include <QMessageBox>
 #include <iostream>
 #include <header/ui/MainWindow.h>
+#include <QtCore/QCoreApplication>
 
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {    //To show the menu in the application
-    QCoreApplication::setAttribute(Qt::AA_DontUseNativeMenuBar);
+
 
     ui->setupUi(this);
 
@@ -110,6 +111,8 @@ void MainWindow::connectMenus()
 
     connect(ui->actionRedo, SIGNAL(triggered()), mandalaArea, SLOT(redo()));
     connect(ui->actionUndo, SIGNAL(triggered()), mandalaArea, SLOT(undo()));
+
+    connect(ui->sizeBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(resizeImage(const QString&)));
 }
 
 void MainWindow::resizeImage(const QString & newSize) {
@@ -119,7 +122,9 @@ void MainWindow::resizeImage(const QString & newSize) {
     mandalaArea->setHeight(stringHeight.toInt());
     mandalaArea->setWidth(stringWidth.toInt());
     mandalaArea->resize(stringWidth.toInt(), stringHeight.toInt());
-    adjustSize();
+    ui->frame_2->resize(width + 128, height + 10);
+    resize(width + 128, height + 400);
+    //adjustSize();
 }
 
 bool MainWindow::maybeSave()
@@ -179,3 +184,8 @@ void MainWindow::onPenWidthChanged(int newWidth) {
             scene->width() / 2. - newWidth, scene->height() / 2. - newWidth, newWidth * 2, newWidth * 2,
             QPen(mandalaArea->getMyPenColor()), QBrush(mandalaArea->getMyPenColor()));
 }
+
+void MainWindow::sizeChanged(const QString &s) {
+
+}
+

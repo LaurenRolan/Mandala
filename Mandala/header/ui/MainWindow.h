@@ -28,6 +28,8 @@ private slots:
     void resizeImage(const QString & newSize);
     void onPenWidthChanged(int newWidth);
 
+    void sizeChanged(const QString &);
+
 
     void setColorTurning(bool);
 

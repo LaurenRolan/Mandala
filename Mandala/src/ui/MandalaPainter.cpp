@@ -121,6 +121,7 @@ void MandalaPainter::paintEvent(QPaintEvent *event)
 
 void MandalaPainter::resizeEvent(QResizeEvent *event)
 {
+
     if (width() > image.width() || height() > image.height()) {
         int newWidth = qMax(width() + 128, image.width());
         int newHeight = qMax(height() + 128, image.height());
@@ -129,6 +130,7 @@ void MandalaPainter::resizeEvent(QResizeEvent *event)
     }
     QWidget::resizeEvent(event);
 }
+
 
 void MandalaPainter::drawLineTo(const QPoint &endPoint)
 {
@@ -235,7 +237,6 @@ void MandalaPainter::setColorTurning(int newValue) {
 
 void MandalaPainter::setHasToShowGrid(int hasToShowGrid) {
 	MandalaPainter::hasToShowGrid = static_cast<bool>(hasToShowGrid);
-	std::cout << "Test" << std::endl;
 	repaint();
 }
 
@@ -299,5 +300,14 @@ void MandalaPainter::setMirroring(int mirroring) {
 	MandalaPainter::mirroring = static_cast<bool>(mirroring);
 	repaint();
 }
+
+
+void MandalaPainter::resizeImage(int width, int height) {
+	image =  QImage(width, height, QImage::Format_RGB32);
+	image = drawable->getResult(width, height);
+	resize(width + 128, height + 10);
+}
+
+
 
 

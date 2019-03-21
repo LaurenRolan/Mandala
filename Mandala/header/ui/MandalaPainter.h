@@ -21,6 +21,7 @@ public:
     bool isModified() const { return modified; }
     QColor penColor() const { return myPenColor; }
     int penWidth() const { return myPenWidth; }
+	const QColor &getMyPenColor() const;
 
 public slots:
     void clearImage();
@@ -31,6 +32,8 @@ public slots:
 	int getMyPenWidth() const;
 
 	void setMirroring(int mirroring);
+
+	void resizeImage(int width, int height);
 
 	void undo();
 	void redo();
@@ -58,10 +61,7 @@ private:
     int myWidth;
     int myHeight;
     QColor myPenColor;
-public:
-	const QColor &getMyPenColor() const;
 
-private:
 	QImage image;
     QPoint lastPoint;
 
@@ -72,12 +72,13 @@ private:
 
 	bool mirroring;
 
-private:
 
 	bool hasToShowGrid;
 	int gridIntensity;
 
 	void drawGrid(QPainter &painter);
+
+
 };
 
 #endif // MANDALAPAINTER_H
