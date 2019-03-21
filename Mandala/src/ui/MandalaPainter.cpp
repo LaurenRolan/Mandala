@@ -184,9 +184,10 @@ void MandalaPainter::drawLine(QPoint &beginPoint, const QPoint &endPoint) {
 			beginPointMirroring = symmetryTransform.map(beginPoint);
 			endPointMirroring   = symmetryTransform.map(endPointTmp);
 
-			beginPointMirroring.setY(-beginPointMirroring.y());
-			endPointMirroring.setY(-endPointMirroring.y());
-
+			if(numberSlices % 2 == 0) {
+				beginPointMirroring.setY(-beginPointMirroring.y());
+				endPointMirroring.setY(-endPointMirroring.y());
+			}
 			painter.drawLine(beginPointMirroring, endPointMirroring);
 			drawable->drawLine(beginPointMirroring, endPointMirroring);
 		}
