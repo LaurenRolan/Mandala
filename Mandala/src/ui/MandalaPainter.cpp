@@ -150,6 +150,9 @@ void MandalaPainter::drawLine(QPoint &beginPoint, const QPoint &endPoint) {
 
 	// TODO : make it work
 	QTransform symmetryTransform;
+	if(numberSlices % 2 == 0) {
+		symmetryTransform.rotate(180).translate(-myWidth, 0);
+	}
 
 
 	int h, s, v, a;
@@ -173,9 +176,7 @@ void MandalaPainter::drawLine(QPoint &beginPoint, const QPoint &endPoint) {
 		if (mirroring) {
 			QPoint beginPointMirroring, endPointMirroring;
 
-			if(numberSlices % 2 == 0) {
-				symmetryTransform.rotate(180).translate(-myWidth, 0);
-			} else {
+			if(numberSlices % 2 == 1) {
 				symmetryTransform.translate(myWidth / 2., myHeight / 2.).rotate(angle * i + angle / 2.).rotate(180, Qt::YAxis)
 				.rotate(-angle * i - angle / 2.).translate(- myWidth / 2., - myHeight / 2.);
 			}
