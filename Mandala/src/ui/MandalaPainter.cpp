@@ -146,7 +146,13 @@ void MandalaPainter::drawLine(QPoint &beginPoint, const QPoint &endPoint) {
 
 
 	// TODO : make it work
-	QTransform symetryTransform;
+	QTransform symmetryTransform;
+	if(numberSlices == 2) {
+		symmetryTransform.translate(myWidth / 2., myHeight / 2.).rotate(180, Qt::YAxis).translate(- myWidth / 2., - myHeight / 2.);
+	} else {
+		symmetryTransform.translate(myWidth / 2., myHeight / 2.).rotate(angle / (numberSlices - 1.)).rotate(180, Qt::YAxis).translate(- myWidth / 2., - myHeight / 2.);
+	}
+
 	//rotateTransform.translate(myWidth / 2., myHeight / 2.).rotate(angle).rotate(180, Qt::YAxis).translate(- myWidth / 2., - myHeight / 2.);
 
 	int h, s, v, a;
@@ -170,8 +176,8 @@ void MandalaPainter::drawLine(QPoint &beginPoint, const QPoint &endPoint) {
 		if (mirroring) {
 			QPoint beginPointMirroring, endPointMirroring;
 
-			beginPointMirroring = symetryTransform.map(beginPoint);
-			endPointMirroring   = symetryTransform.map(endPointTmp);
+			beginPointMirroring = symmetryTransform.map(beginPoint);
+			endPointMirroring   = symmetryTransform.map(endPointTmp);
 
 			painter.drawLine(beginPointMirroring, endPointMirroring);
 			drawable->drawLine(beginPointMirroring, endPointMirroring);
