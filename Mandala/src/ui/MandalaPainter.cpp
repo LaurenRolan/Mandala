@@ -152,6 +152,8 @@ void MandalaPainter::drawLine(QPoint &beginPoint, const QPoint &endPoint) {
 	QTransform symmetryTransform;
 	if(numberSlices % 2 == 0) {
 		symmetryTransform.rotate(180).translate(-myWidth, 0);
+	} else {
+		symmetryTransform.rotate(180).translate(-myWidth, 0);
 	}
 
 
@@ -175,19 +177,23 @@ void MandalaPainter::drawLine(QPoint &beginPoint, const QPoint &endPoint) {
 
 		if (mirroring) {
 			QPoint beginPointMirroring, endPointMirroring;
-
+/*
 			if(numberSlices % 2 == 1) {
 				symmetryTransform.translate(myWidth / 2., myHeight / 2.).rotate(angle * i + angle / 2.).rotate(180, Qt::YAxis)
 				.rotate(-angle * i - angle / 2.).translate(- myWidth / 2., - myHeight / 2.);
 			}
-
+*/
 			beginPointMirroring = symmetryTransform.map(beginPoint);
 			endPointMirroring   = symmetryTransform.map(endPointTmp);
 
 			if(numberSlices % 2 == 0) {
 				beginPointMirroring.setY(-beginPointMirroring.y());
 				endPointMirroring.setY(-endPointMirroring.y());
+			} else {
+				beginPointMirroring.setY(-beginPointMirroring.y());
+				endPointMirroring.setY(-endPointMirroring.y());
 			}
+
 			painter.drawLine(beginPointMirroring, endPointMirroring);
 			drawable->drawLine(beginPointMirroring, endPointMirroring);
 		}
@@ -253,8 +259,18 @@ void MandalaPainter::setGridIntensity(int gridIntensity) {
 }
 
 void MandalaPainter::drawGrid(QPainter &painter) {
-	QLine line(0, static_cast<int>(myHeight / 2.),
-			   static_cast<int>(myWidth / 2.), static_cast<int>(myHeight / 2.));
+	QLine line;
+
+
+	if (numberSlices % 2 == 0) {
+		line = QLine(0, static_cast<int>(myHeight / 2.),
+				   static_cast<int>(myWidth / 2.), static_cast<int>(myHeight / 2.));
+	} else {
+		line = QLine(static_cast<int>(myWidth / 2.), -static_cast<int>(myHeight / 2.),
+				   static_cast<int>(myWidth / 2.), static_cast<int>(myHeight / 2.));
+	}
+
+
 	double angle = 360.0 / numberSlices;
 	QTransform transform;
 	transform.translate(myWidth / 2., myHeight / 2.).rotate(angle).translate(-myWidth / 2., -myHeight / 2.);
