@@ -5,8 +5,6 @@
 #include <lib/images/DrawerUtility.h>
 #include <lib/images/forms/PixelForm.h>
 #include <lib/images/forms/LineForm.h>
-#include <header/lib/images/DrawerUtility.h>
-
 
 DrawerUtility::DrawerUtility() {
 	image = new Image();

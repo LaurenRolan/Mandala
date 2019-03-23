@@ -15,18 +15,26 @@ QMAKE_CXXFLAGS += -std=c++0x
 TARGET = Mandala
 TEMPLATE = app
 
-INCLUDEPATH = ./header/ui
+INCLUDEPATH = ./header
 
 SOURCES += src/main.cpp\
-    src/ui/MainWindow.cpp \
     src/lib/images/Image.cpp \
-    src/lib/images/Form.cpp \
+    src/lib/images/DrawerUtility.cpp \
+    src/lib/images/forms/Form.cpp \
+    src/lib/images/forms/FormSet.cpp \
+    src/lib/images/forms/LineForm.cpp \
+    src/lib/images/forms/PixelForm.cpp \
+    src/ui/MainWindow.cpp \
     src/ui/MandalaPainter.cpp
 
 HEADERS  +=  header/ui/MainWindow.h \
     header/lib/command/command.h \
     header/lib/images/Image.h \
-    header/lib/images/Form.h \
+    header/lib/images/DrawerUtility.h \
+    header/lib/images/forms/Form.h \
+    header/lib/images/forms/FormSet.h \
+    header/lib/images/forms/LineForm.h \
+    header/lib/images/forms/PixelForm.h \
     header/ui/MandalaPainter.h
 
 FORMS    += \
