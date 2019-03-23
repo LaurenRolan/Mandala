@@ -125,6 +125,8 @@ void MainWindow::connectMenus()
     connect(ui->actionUndo, SIGNAL(triggered()), mandalaArea, SLOT(undo()));
 
     connect(ui->sizeBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(resizeImage(const QString&)));
+
+    connect(ui->actionShow_pallete, SIGNAL(triggered()), this, SLOT(showPalette()));
 }
 
 void MainWindow::resizeImage(const QString & newSize) {
@@ -207,3 +209,9 @@ void MainWindow::sizeChanged(const QString &s) {
 
 }
 
+void MainWindow::showPalette() {
+    /*
+    QWidget *wdg = new QWidget;
+    wdg->show();
+    */
+}
