@@ -8,6 +8,7 @@
 #include <iostream>
 #include <header/ui/MainWindow.h>
 #include <QtCore/QCoreApplication>
+#include <QPixmap>
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -81,13 +82,24 @@ void MainWindow::penWidth(int width)
 //TODO : modify the info
 void MainWindow::about()
 {
-    QMessageBox::about(this, tr("About Mandala"),
-            tr("ENSICAEN 2019 <br> By <br>"
-               "Erik KUBIAK and Lauren ROLAN"));
+    QMessageBox about(this);
+
+    about.setText("Mandala Project");
+    about.setInformativeText(tr("ENSICAEN, France\n"
+                                "March 2019.\n\n"
+                                "By Erik KUBIAK and Lauren ROLAN.\n"));
+    about.setStandardButtons(QMessageBox::Ok);
+    QPixmap mandala(":/images/mandala.jpg");
+    mandala = mandala.scaled(100, 100);
+    about.setIconPixmap(mandala);
+    about.setDefaultButton(QMessageBox::Ok);
+    about.show();
+    about.exec();
 }
 
 void MainWindow::connectMenus()
 {
+    connect(ui->actionAbout_this_program, SIGNAL(triggered()), this, SLOT(about()));
     connect(ui->action_Save, SIGNAL(triggered()), this, SLOT(save()));
     connect(ui->action_Open, SIGNAL(triggered()), this, SLOT(open()));
     connect(ui->lineColorButton, SIGNAL(clicked()), this, SLOT(penColor()));

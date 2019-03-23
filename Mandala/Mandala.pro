@@ -15,7 +15,8 @@ QMAKE_CXXFLAGS += -std=c++0x
 TARGET = Mandala
 TEMPLATE = app
 
-INCLUDEPATH = ./header
+INCLUDEPATH += ./header \
+        ./header/ui
 
 SOURCES += src/main.cpp\
     src/lib/images/Image.cpp \
@@ -39,3 +40,6 @@ HEADERS  +=  header/ui/MainWindow.h \
 
 FORMS    += \
     src/ui/MainWindow.ui
+
+RESOURCES += \
+    src/ui/icons.qrc
