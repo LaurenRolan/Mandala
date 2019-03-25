@@ -37,8 +37,4 @@ void FormList::drawAll(QPainter &painter) {
     for (int i = 0; i < _index; i++) {
         (*_data)[i]->draw(painter);
     }
-    /*
-	for(auto *f :  *_data) {
-		f->draw(painter);
-	}*/
 }
