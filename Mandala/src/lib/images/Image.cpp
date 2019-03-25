@@ -1,7 +1,5 @@
 
-#include <header/lib/images/Image.h>
-
-#include "header/lib/images/Image.h"
+#include <lib/images/Image.h>
 
 Image::Image()
 {
