@@ -79,6 +79,7 @@ private:
 	void drawGrid(QPainter &painter);
 
 
+
 	QImage loadedImage;
 };
 
