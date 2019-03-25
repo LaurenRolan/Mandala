@@ -157,7 +157,7 @@ void MandalaPainter::drawLine(QPoint &beginPoint, const QPoint &endPoint) {
 	// TODO : make it work
 	QTransform symmetryTransform;
 	//symmetryTransform.rotate(180).translate(-myWidth, 0).scale(1, -1);
-	symmetryTransform.translate(myWidth / 2., myHeight / 2.).rotate(180, Qt::XAxis).translate(- myWidth / 2., - myHeight / 2.);
+	symmetryTransform.translate(myWidth / 2., myHeight / 2.).rotate(180, Qt::YAxis).translate(- myWidth / 2., - myHeight / 2.);
 
 	int h, s, v, a;
 	myPenColor.getHsv(&h, &s, &v, &a);
@@ -183,12 +183,12 @@ void MandalaPainter::drawLine(QPoint &beginPoint, const QPoint &endPoint) {
 			beginPointMirroring = symmetryTransform.map(beginPoint);
 			endPointMirroring   = symmetryTransform.map(endPointTmp);
 
-			/*
-			QTransform transform;
-			transform.translate(myWidth / 2., myHeight / 2.).rotate(angle/2.).translate(- myWidth / 2., - myHeight / 2.);
-			beginPointMirroring = transform.map(beginPointMirroring);
-			endPointMirroring   = transform.map(endPointMirroring);
-*/
+
+			QTransform transform1;
+			transform1.translate(myWidth / 2., myHeight / 2.).rotate(angle * i).translate(- myWidth / 2., - myHeight / 2.);
+			beginPointMirroring = transform1.map(beginPointMirroring);
+			endPointMirroring   = transform1.map(endPointMirroring);
+
 			painter.drawLine(beginPointMirroring, endPointMirroring);
 			drawable->drawLine(beginPointMirroring, endPointMirroring);
 		}
