@@ -40,6 +40,7 @@ bool MandalaPainter::openImage(const QString &fileName)
     QSize newSize = loadedImage.size().expandedTo(size());
     resizeImage(&loadedImage, newSize);
     image = loadedImage;
+    drawable->setInitialImage(new QImage(loadedImage));
     modified = false;
     update();
     return true;
@@ -47,8 +48,12 @@ bool MandalaPainter::openImage(const QString &fileName)
 
 bool MandalaPainter::saveImage(const QString &fileName, const char *fileFormat)
 {
-    QImage visibleImage = image;
+    QImage visibleImage = image; //drawable->getResult(size().width(), size().height());
     resizeImage(&visibleImage, size());
+
+
+
+    std::cout << visibleImage.width() << " " << visibleImage.height() << std::endl;
 
     if (visibleImage.save(fileName, fileFormat)) {
         modified = false;
@@ -126,6 +131,7 @@ void MandalaPainter::resizeEvent(QResizeEvent *event)
         int newWidth = qMax(width() + 128, image.width());
         int newHeight = qMax(height() + 128, image.height());
         resizeImage(&image, QSize(newWidth, newHeight));
+		//resizeImage(&loadedImage, QSize(newWidth, newHeight));
         update();
     }
     QWidget::resizeEvent(event);

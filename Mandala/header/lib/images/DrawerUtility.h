@@ -30,6 +30,8 @@ public:
 
 	QImage & getResult(int width, int height) override;
 
+	void setInitialImage(QImage *image) override;
+
 private:
 	void drawForm(Form *f);
 
@@ -37,6 +39,7 @@ private:
 	QColor color;
 	int penWidth;
 	Image *image;
+	QImage *initialImage;
 };
 
 

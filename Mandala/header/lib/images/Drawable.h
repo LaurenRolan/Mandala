@@ -24,6 +24,8 @@ public:
 	virtual void endForm() = 0;
 
 	virtual QImage & getResult(int width, int height) = 0;
+
+	virtual void setInitialImage(QImage *image) = 0;
 };
 
 

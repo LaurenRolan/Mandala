@@ -5,10 +5,15 @@
 #include <lib/images/DrawerUtility.h>
 #include <lib/images/forms/PixelForm.h>
 #include <lib/images/forms/LineForm.h>
+#include <header/lib/images/DrawerUtility.h>
+#include <iostream>
+
 
 DrawerUtility::DrawerUtility() {
 	image = new Image();
 	currentFormSet = nullptr;
+	initialImage = nullptr;
+
 }
 
 void DrawerUtility::onDraw(QPoint &p) {
@@ -41,8 +46,16 @@ void DrawerUtility::endForm() {
 }
 
 QImage & DrawerUtility::getResult(int width, int height) {
-	QImage *image = new QImage(width, height, QImage::Format_RGB32);
-	image->fill(qRgb(255, 255, 255));
+
+
+	QImage *image = nullptr;
+	if(!initialImage) {
+		image = new QImage(width, height, QImage::Format_RGB32);
+		image->fill(qRgb(255, 255, 255));
+	} else {
+		image = new QImage(*initialImage);
+	}
+
 
 	QPainter painter(image);
 
@@ -73,4 +86,8 @@ void DrawerUtility::undo() {
 
 void DrawerUtility::redo() {
 	image->redo();
+}
+
+void DrawerUtility::setInitialImage(QImage *image) {
+	initialImage = image;
 }
