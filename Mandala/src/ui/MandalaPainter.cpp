@@ -338,6 +338,7 @@ void MandalaPainter::setBackgroundColor(const QColor &newColor) { //Same effect 
 //    this->setPalette(p);
 
     QPainter painter(&image);
+    drawable->setBackgroundColor(QColor(newColor));
     painter.fillRect(QRect(QPoint(0,0), QPoint(myWidth, myHeight)), QBrush(newColor));
 }
 

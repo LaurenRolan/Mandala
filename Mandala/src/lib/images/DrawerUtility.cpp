@@ -13,6 +13,7 @@ DrawerUtility::DrawerUtility() {
 	image = new Image();
 	currentFormSet = nullptr;
 	initialImage = nullptr;
+	background = qRgb(255, 255, 255);
 
 }
 
@@ -52,7 +53,7 @@ QImage & DrawerUtility::getResult(int width, int height) {
 	QImage *image = nullptr;
 	if(!initialImage) {
 		image = new QImage(width, height, QImage::Format_RGB32);
-		image->fill(qRgb(255, 255, 255));
+		image->fill(background);
 	} else {
 		image = new QImage(*initialImage);
 	}
@@ -91,4 +92,9 @@ void DrawerUtility::redo() {
 
 void DrawerUtility::setInitialImage(QImage *image) {
 	initialImage = image;
+}
+
+void DrawerUtility::setBackgroundColor(QColor color) {
+	background = color;
+	initialImage = nullptr;
 }

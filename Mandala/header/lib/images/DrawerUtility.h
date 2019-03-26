@@ -32,6 +32,8 @@ public:
 
 	void setInitialImage(QImage *image) override;
 
+	void setBackgroundColor (QColor color) override;
+
 private:
 	void drawForm(Form *f);
 
@@ -40,6 +42,7 @@ private:
 	int penWidth;
 	Image *image;
 	QImage *initialImage;
+	QColor background;
 };
 
 
