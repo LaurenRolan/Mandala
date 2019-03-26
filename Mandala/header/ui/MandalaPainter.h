@@ -14,6 +14,7 @@ public:
     bool openImage(const QString &fileName);
     bool saveImage(const QString &fileName, const char *fileFormat);
     void setPenColor(const QColor &newColor);
+    void setBackgroundColor(const QColor &newColor);
 
     void setHeight(int height);
     void setWidth(int width);
@@ -61,6 +62,7 @@ private:
     int myWidth;
     int myHeight;
     QColor myPenColor;
+    QColor myBackgroundColor;
 
 	QImage image;
     QPoint lastPoint;

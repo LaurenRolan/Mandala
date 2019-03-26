@@ -16,7 +16,8 @@ TARGET = Mandala
 TEMPLATE = app
 
 INCLUDEPATH += ./header \
-        ./header/ui
+        ./header/ui \
+        /opt/Qt/5.3/Src/qtbase/include/QtWidgets
 
 SOURCES += src/main.cpp\
     src/lib/images/Image.cpp \

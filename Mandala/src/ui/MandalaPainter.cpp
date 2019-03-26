@@ -261,7 +261,6 @@ void MandalaPainter::setGridIntensity(int gridIntensity) {
 void MandalaPainter::drawGrid(QPainter &painter) {
 	QLine line;
 
-
 	if (numberSlices % 2 == 0) {
 		line = QLine(0, static_cast<int>(myHeight / 2.),
 				   static_cast<int>(myWidth / 2.), static_cast<int>(myHeight / 2.));
@@ -332,5 +331,8 @@ void MandalaPainter::resizeImage(int width, int height) {
 }
 
 
-
+void MandalaPainter::setBackgroundColor(const QColor &newColor) { //Same effect of clear
+    QPainter painter(&image);
+    painter.fillRect(QRect(QPoint(0,0), QPoint(myWidth, myHeight)), QBrush(newColor));
+}
 

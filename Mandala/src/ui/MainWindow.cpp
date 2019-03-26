@@ -14,8 +14,8 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
-{    //To show the menu in the application
-
+{
+     QCoreApplication::setAttribute(Qt::AA_DontUseNativeMenuBar);
 
     ui->setupUi(this);
 
@@ -73,6 +73,15 @@ void MainWindow::penColor()
     }
 }
 
+void MainWindow::backgroundColor(){
+    QColor newColor = QColorDialog::getColor(mandalaArea->penColor());
+    if (newColor.isValid()) {
+        mandalaArea->setBackgroundColor(newColor);
+        onPenWidthChanged(mandalaArea->getMyPenWidth());
+    }
+
+}
+
 void MainWindow::penWidth(int width)
 {
     mandalaArea->setPenWidth(width);
@@ -125,6 +134,7 @@ void MainWindow::connectMenus()
     connect(ui->actionUndo, SIGNAL(triggered()), mandalaArea, SLOT(undo()));
 
     connect(ui->sizeBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(resizeImage(const QString&)));
+    connect(ui->backgroundButton, SIGNAL(clicked()), this, SLOT(backgroundColor()));
 
     connect(ui->actionShow_pallete, SIGNAL(triggered()), this, SLOT(showPalette()));
 }
@@ -135,7 +145,7 @@ void MainWindow::resizeImage(const QString & newSize) {
     QString stringHeight = newSize.mid(xIndex + 1);
 
 
-	int height = stringHeight.toInt();
+    int height = stringHeight.toInt(); QCoreApplication::setAttribute(Qt::AA_DontUseNativeMenuBar);
 	
 	
 	mandalaArea->setHeight(height);
