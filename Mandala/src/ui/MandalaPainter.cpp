@@ -332,6 +332,11 @@ void MandalaPainter::resizeImage(int width, int height) {
 
 
 void MandalaPainter::setBackgroundColor(const QColor &newColor) { //Same effect of clear
+
+//    QPalette p = this->palette();
+//    p.setColor(QPalette::Background, newColor);
+//    this->setPalette(p);
+
     QPainter painter(&image);
     painter.fillRect(QRect(QPoint(0,0), QPoint(myWidth, myHeight)), QBrush(newColor));
 }
