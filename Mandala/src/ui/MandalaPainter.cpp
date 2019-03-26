@@ -165,6 +165,7 @@ void MandalaPainter::drawLine(QPoint &beginPoint, const QPoint &endPoint) {
 	QColor color = myPenColor;
 
 	drawable->setColor(color);
+	drawable->setPenWidth(myPenWidth);
 	painter.setPen(pen);
     for(int i = 0; i < numberSlices; i++) {
     	if(colorTurning) {

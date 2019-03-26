@@ -5,9 +5,11 @@
 #include <lib/images/forms/LineForm.h>
 #include <header/lib/images/forms/LineForm.h>
 #include <QtGui/QPainter>
+#include <iostream>
 
 
 void LineForm::draw(QPainter &painter) {
+	std::cout << penWidth << std::endl;
 	painter.setPen(QPen(color, penWidth, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
 	painter.drawLine(origin, extremity);
 }
