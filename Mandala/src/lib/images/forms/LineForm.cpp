@@ -9,7 +9,6 @@
 
 
 void LineForm::draw(QPainter &painter) {
-	std::cout << penWidth << std::endl;
 	painter.setPen(QPen(color, penWidth, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
 	painter.drawLine(origin, extremity);
 }
