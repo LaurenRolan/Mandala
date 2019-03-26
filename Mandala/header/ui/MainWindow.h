@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QtWidgets/QGraphicsScene>
+#include <QGraphicsScene>
 #include "header/ui/MandalaPainter.h"
 
 namespace Ui {
@@ -23,19 +23,16 @@ private slots:
     void open();
     void save();
     void penColor();
+    void backgroundColor();
     void penWidth(int width);
     void about();
     void resizeImage(const QString & newSize);
     void onPenWidthChanged(int newWidth);
-
     void sizeChanged(const QString &);
-
-
     void setColorTurning(bool);
-
     void on_lineSlider_sliderMoved(int position);
-
     void on_sizeBox_currentIndexChanged(const QString &arg1);
+    void showPalette();
 
 private:
     void connectMenus();
