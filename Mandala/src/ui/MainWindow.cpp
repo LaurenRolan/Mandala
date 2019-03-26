@@ -220,8 +220,8 @@ void MainWindow::sizeChanged(const QString &s) {
 }
 
 void MainWindow::showPalette() {
-    /*
+
     QWidget *wdg = new QWidget;
     wdg->show();
-    */
+
 }

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>312</width>
+    <height>475</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QPushButton" name="pushButton">
+   <property name="geometry">
+    <rect>
+     <x>110</x>
+     <y>70</y>
+     <width>99</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Color</string>
+   </property>
+  </widget>
+  <widget class="FormPainter" name="circle" native="true">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>130</y>
+     <width>80</width>
+     <height>80</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="FormPainter" name="triangle" native="true">
+   <property name="geometry">
+    <rect>
+     <x>190</x>
+     <y>130</y>
+     <width>80</width>
+     <height>80</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="FormPainter" name="square" native="true">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>240</y>
+     <width>80</width>
+     <height>80</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="FormPainter" name="heart" native="true">
+   <property name="geometry">
+    <rect>
+     <x>190</x>
+     <y>240</y>
+     <width>80</width>
+     <height>80</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="FormPainter" name="trace" native="true">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>350</y>
+     <width>80</width>
+     <height>80</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="FormPainter" name="arc" native="true">
+   <property name="geometry">
+    <rect>
+     <x>190</x>
+     <y>350</y>
+     <width>80</width>
+     <height>80</height>
+    </rect>
+   </property>
+  </widget>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>FormPainter</class>
+   <extends>QWidget</extends>
+   <header location="global">formpainter.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>
