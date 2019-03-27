@@ -83,6 +83,8 @@ private:
 
 
 	QImage loadedImage;
+
+	QPoint symmetry(const QPoint &point, double angle, QPointF &orig) const;
 };
 
 #endif // MANDALAPAINTER_H

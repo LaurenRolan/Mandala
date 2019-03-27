@@ -1,13 +1,11 @@
-#include "header/ui/MandalaPainter.h"
 #include <QPainter>
 #include <QPrinter>
 #include <QPrintDialog>
 #include <iostream>
 #include <header/lib/images/DrawerUtility.h>
 #include <header/ui/MandalaPainter.h>
+#include <cmath>
 
-
-#define PI 3.14159265
 
 MandalaPainter::MandalaPainter(QWidget *parent) : QWidget(parent)
 {
@@ -147,17 +145,14 @@ void MandalaPainter::drawLine(QPoint &beginPoint, const QPoint &endPoint) {
     QPainter painter(&image);
     QPen pen = QPen(myPenColor, myPenWidth, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
 
+	QPointF orig(myWidth / 2., myHeight / 2.);
     QPoint endPointTmp = endPoint;
+
 
     double angle = 360.0 / numberSlices;
 	QTransform rotateTransform;
-	rotateTransform.translate(myWidth / 2., myHeight / 2.).rotate(angle).translate(- myWidth / 2., - myHeight / 2.);
+	rotateTransform.translate(orig.x(), orig.y()).rotate(angle).translate(- orig.x(), - orig.y());
 
-
-	// TODO : make it work
-	QTransform symmetryTransform;
-	//symmetryTransform.rotate(180).translate(-myWidth, 0).scale(1, -1);
-	//symmetryTransform.translate(myWidth / 2., myHeight / 2.).rotate(180, Qt::XAxis).translate(- myWidth / 2., - myHeight / 2.);
 
 	int h, s, v, a;
 	myPenColor.getHsv(&h, &s, &v, &a);
@@ -167,6 +162,7 @@ void MandalaPainter::drawLine(QPoint &beginPoint, const QPoint &endPoint) {
 	drawable->setColor(color);
 	drawable->setPenWidth(myPenWidth);
 	painter.setPen(pen);
+
     for(int i = 0; i < numberSlices; i++) {
     	if(colorTurning) {
 			color.setHsv(static_cast<int>(h + angle * i), s, v, a);
@@ -179,19 +175,11 @@ void MandalaPainter::drawLine(QPoint &beginPoint, const QPoint &endPoint) {
 		drawable->drawLine(beginPoint, endPointTmp);
 
 		if (mirroring) {
-			QPoint beginPointMirroring, endPointMirroring;
 
+			double lineAngle = (180 - angle * (i + 1) + angle / 2.) * (M_PI / 180);
 
-
-			beginPointMirroring = symmetryTransform.map(beginPoint);
-			endPointMirroring   = symmetryTransform.map(endPointTmp);
-
-/*
-			QTransform transform;
-			transform.translate(myWidth / 2., myHeight / 2.).rotate(-angle/2. * i).rotate(180, Qt::XAxis).rotate(angle/2. * i).translate(- myWidth / 2., - myHeight / 2.);
-			beginPointMirroring = transform.map(beginPointMirroring);
-			endPointMirroring   = transform.map(endPointMirroring);
-*/
+			QPoint beginPointMirroring = symmetry(beginPoint, lineAngle, orig);
+			QPoint endPointMirroring   = symmetry(endPointTmp, lineAngle, orig);
 
 
 			painter.drawLine(beginPointMirroring, endPointMirroring);
@@ -206,6 +194,18 @@ void MandalaPainter::drawLine(QPoint &beginPoint, const QPoint &endPoint) {
 	beginPoint = endPointTmp;
 	modified = true;
 	repaint();
+}
+
+QPoint MandalaPainter::symmetry(const QPoint &point, double angle, QPointF &orig) const {
+	QPointF vec(std::cos (angle), std::sin (angle));
+
+	double n = vec.y() * vec.y() + vec.x() * vec.x();
+	double temp = vec.y() * point.x() + vec.x() * point.y();
+
+	return {
+			static_cast<int>(point.x() + 2 * vec.y() * (vec.y() * orig.x() + vec.x() * orig.y() - temp) / n),
+			static_cast<int>(point.y() + 2 * vec.x() * (vec.y() * orig.x() + vec.x() * orig.y() - temp) / n)
+	};
 }
 
 
@@ -261,13 +261,13 @@ void MandalaPainter::setGridIntensity(int gridIntensity) {
 void MandalaPainter::drawGrid(QPainter &painter) {
 	QLine line;
 
-	if (numberSlices % 2 == 0) {
-		line = QLine(0, static_cast<int>(myHeight / 2.),
-				   static_cast<int>(myWidth / 2.), static_cast<int>(myHeight / 2.));
-	} else {
+	//if (numberSlices % 2 == 0) {
+		line = QLine(-static_cast<int>(myWidth / 2.), static_cast<int>(myHeight / 2.),
+				      static_cast<int>(myWidth / 2.), static_cast<int>(myHeight / 2.));
+	/*} else {
 		line = QLine(static_cast<int>(myWidth / 2.), -static_cast<int>(myHeight / 2.),
 				   static_cast<int>(myWidth / 2.), static_cast<int>(myHeight / 2.));
-	}
+	}*/
 
 
 	double angle = 360.0 / numberSlices;
