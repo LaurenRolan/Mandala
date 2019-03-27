@@ -3,10 +3,12 @@
 
 #include <QWidget>
 
-class ShapeViewer
+class ShapeViewer : public QWidget
 {
+Q_OBJECT
+
 public:
-    ShapeViewer();
+    explicit ShapeViewer(QWidget *parent = nullptr);
     void setHeight(int height);
     void setWidth(int width);
     QColor penColor() const { return myPenColor; }
@@ -15,15 +17,15 @@ public:
 public slots:
     void setPenColor(const QColor &newColor);
     void setPenWidth(int newWidth);
-    void drawIcon(int id);
 
 private:
-    void drawTriangle();
-    void drawSquare();
-    void drawCircle();
-    void drawHexagon();
-    void drawArc();
-    void drawImage();
+    void paintEvent(QPaintEvent *event);
+    void drawTriangle(QPaintDevice * dev);
+    void drawSquare(QPaintDevice * dev);
+    void drawCircle(QPaintDevice * dev);
+    void drawHexagon(QPaintDevice * dev);
+    void drawArc(QPaintDevice * dev);
+    void drawImage(QPaintDevice * dev);
     void resizeImage(QImage *image, const QSize &newSize);
 
     int myPenWidth;

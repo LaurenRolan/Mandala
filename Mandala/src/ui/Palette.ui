@@ -26,7 +26,7 @@
     <string>Color</string>
    </property>
   </widget>
-  <widget class="QWidget" name="circle" native="true">
+  <widget class="ShapeViewer" name="circle" native="true">
    <property name="geometry">
     <rect>
      <x>40</x>
@@ -36,7 +36,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QWidget" name="square" native="true">
+  <widget class="ShapeViewer" name="square" native="true">
    <property name="geometry">
     <rect>
      <x>160</x>
@@ -46,7 +46,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QWidget" name="triangle" native="true">
+  <widget class="ShapeViewer" name="triangle" native="true">
    <property name="geometry">
     <rect>
      <x>280</x>
@@ -56,7 +56,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QWidget" name="hexagon" native="true">
+  <widget class="ShapeViewer" name="hexagon" native="true">
    <property name="geometry">
     <rect>
      <x>40</x>
@@ -66,7 +66,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QWidget" name="image" native="true">
+  <widget class="ShapeViewer" name="image" native="true">
    <property name="geometry">
     <rect>
      <x>280</x>
@@ -76,7 +76,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QWidget" name="arc" native="true">
+  <widget class="ShapeViewer" name="arc" native="true">
    <property name="geometry">
     <rect>
      <x>160</x>
@@ -116,6 +116,14 @@
    </property>
   </widget>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ShapeViewer</class>
+   <extends>QWidget</extends>
+   <header location="global">ShapeViewer.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

@@ -26,7 +26,6 @@ public:
 
 public slots:
     void clearImage();
-    void print();
     void setSlices(int newNumberSlices);
 	void setColorTurning(int colorTurning);
 	void setPenWidth(int newWidth);

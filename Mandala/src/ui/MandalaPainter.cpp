@@ -49,8 +49,6 @@ bool MandalaPainter::saveImage(const QString &fileName, const char *fileFormat)
     QImage visibleImage = image;
     resizeImage(&visibleImage, size());
 
-
-
     std::cout << visibleImage.width() << " " << visibleImage.height() << std::endl;
 
     if (visibleImage.save(fileName, fileFormat)) {
@@ -221,29 +219,6 @@ void MandalaPainter::resizeImage(QImage *image, const QSize &newSize)
     QPainter painter(&newImage);
     painter.drawImage(QPoint(0, 0), *image);
     *image = newImage;
-}
-
-void MandalaPainter::print()
-{
-
-    /*
-    #if QT_CONFIG(printdialog)
-
-    QPrinter printer(QPrinter::HighResolution);
-
-    QPrintDialog printDialog(&printer, this);
-    if (printDialog.exec() == QDialog::Accepted) {
-           QPainter painter(&printer);
-           QRect rect = painter.viewport();
-           QSize size = image.size();
-           size.scale(rect.size(), Qt::KeepAspectRatio);
-           painter.setViewport(rect.x(), rect.y(), size.width(), size.height());
-           painter.setWindow(image.rect());
-           painter.drawImage(0, 0, image);
-       }
-    #endif // QT_CONFIG(printdialog)
-*/
-
 }
 
 void MandalaPainter::setColorTurning(int newValue) {

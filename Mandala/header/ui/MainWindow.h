@@ -4,7 +4,7 @@
 #include <QMainWindow>
 #include <QGraphicsScene>
 #include "header/ui/MandalaPainter.h"
-#include "header/ui/palette.h"
+#include "header/ui/Palette.h"
 
 namespace Ui {
 class MainWindow;
