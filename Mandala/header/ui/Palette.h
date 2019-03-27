@@ -1,25 +1,21 @@
 #ifndef PALETTE_H
 #define PALETTE_H
 
-#include <QWidget>
 
-namespace Ui {
-class Palette;
-}
+#include <QGraphicsScene>
 
-class Palette : public QWidget
+class Palette
 {
-    Q_OBJECT
-
 public:
-    explicit Palette(QWidget *parent = 0);
-    ~Palette();
-
-public slots:
-    void penColor();
+    Palette();
+    void drawTriangle();
 
 private:
-    Ui::Palette *ui;
+    QGraphicsScene *square;
+    QGraphicsScene *circle;
+    QGraphicsScene *arc;
+    QGraphicsScene *triangle;
+    QGraphicsScene *hexagon;
 };
 
 #endif // PALETTE_H
