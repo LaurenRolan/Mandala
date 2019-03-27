@@ -3,13 +3,20 @@
 
 #include <QWidget>
 
-class palette : public QWidget
+namespace Ui {
+class Palette;
+}
+
+class Palette : public QWidget
 {
+    Q_OBJECT
+
 public:
-    palette(QWidget *parent);
+    explicit Palette(QWidget *parent = 0);
+    ~Palette();
 
 private:
-    //Ui::Palette *ui;
+    Ui::Palette *ui;
 };
 
 #endif // PALETTE_H

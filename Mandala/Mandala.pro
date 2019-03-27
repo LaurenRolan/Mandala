@@ -28,8 +28,8 @@ SOURCES += src/main.cpp\
     src/lib/images/forms/PixelForm.cpp \
     src/ui/MainWindow.cpp \
     src/ui/MandalaPainter.cpp \
-    src/ui/formpainter.cpp \
-    src/ui/palette.cpp
+    src/ui/palette.cpp \
+    src/ui/shapeviewer.cpp
 
 HEADERS  +=  header/ui/MainWindow.h \
     header/lib/command/command.h \
@@ -40,8 +40,8 @@ HEADERS  +=  header/ui/MainWindow.h \
     header/lib/images/forms/LineForm.h \
     header/lib/images/forms/PixelForm.h \
     header/ui/MandalaPainter.h \
-    header/ui/formpainter.h \
-    header/ui/palette.h
+    header/ui/palette.h \
+    header/ui/shapeviewer.h
 
 FORMS    += \
     src/ui/MainWindow.ui \

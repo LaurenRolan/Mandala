@@ -87,8 +87,6 @@ void MainWindow::penWidth(int width)
     mandalaArea->setPenWidth(width);
 }
 
-
-//TODO : modify the info
 void MainWindow::about()
 {
     QMessageBox about(this);
@@ -217,8 +215,6 @@ void MainWindow::onPenWidthChanged(int newWidth) {
 
 
 void MainWindow::showPalette() {
-
-    QWidget *wdg = new QWidget;
-    wdg->show();
-
+    palette = new Palette();
+    palette->show();
 }

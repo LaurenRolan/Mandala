@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QGraphicsScene>
 #include "header/ui/MandalaPainter.h"
+#include "header/ui/palette.h"
 
 namespace Ui {
 class MainWindow;
@@ -43,6 +44,8 @@ private:
     Ui::MainWindow *ui;
 
     QGraphicsScene *scene;
+
+    Palette * palette;
 };
 
 #endif // MAINWINDOW_H
