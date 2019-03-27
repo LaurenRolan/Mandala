@@ -9,14 +9,14 @@ Q_OBJECT
 
 public:
     explicit ShapeViewer(QWidget *parent = nullptr);
-    void setHeight(int height);
-    void setWidth(int width);
-    QColor penColor() const { return myPenColor; }
-    int penWidth() const { return myPenWidth; }
-
-public slots:
-    void setPenColor(const QColor &newColor);
-    void setPenWidth(int newWidth);
+    static void setHeight(int height);
+    static void setWidth(int width);
+    static QColor penColor() { return myPenColor; }
+    static int penWidth() { return myPenWidth; }
+    static void setStartAngle(int angle);
+    static void setSpanAngle(int angle);
+    static void setPenColor(const QColor &newColor);
+    static void setPenWidth(int newWidth);
 
 private:
     void paintEvent(QPaintEvent *event);
@@ -28,11 +28,14 @@ private:
     void drawImage(QPaintDevice * dev);
     void resizeImage(QImage *image, const QSize &newSize);
 
-    int myPenWidth;
-    int myWidth;
-    int myHeight;
+    static int myPenWidth;
+    static int myWidth;
+    static int myHeight;
 
-    QColor myPenColor;
+    static int myStartAngle;
+    static int mySpanAngle;
+
+    static QColor myPenColor;
     QImage image;
 };
 

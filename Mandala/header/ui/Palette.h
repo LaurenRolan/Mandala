@@ -15,6 +15,9 @@ public:
     explicit Palette(QWidget *parent = 0);
     ~Palette();
 
+public slots:
+    void penColor();
+
 private:
     Ui::Palette *ui;
 };
