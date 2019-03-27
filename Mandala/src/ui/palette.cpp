@@ -1,10 +1,10 @@
 #include "palette.h"
-#include "ui_palette.h"
+//#include "ui_palette.h"
 
 palette::palette(QWidget * parent) :
-    QWidget(parent),
-    ui(new Ui::Form)
+    QWidget(parent)//,
+    //ui(new Ui::Form)
 {
-    ui->setUpUI(this);
+    //ui->setUpUI(this);
 }
 

@@ -6,10 +6,10 @@
 class palette : public QWidget
 {
 public:
-    palette();
+    palette(QWidget *parent);
 
 private:
-    Ui::Palette *ui;
+    //Ui::Palette *ui;
 };
 
 #endif // PALETTE_H

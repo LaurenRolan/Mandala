@@ -1,1 +1,3 @@
 *.pro.user
+.idea
+build-Mandala-Desktop-Release

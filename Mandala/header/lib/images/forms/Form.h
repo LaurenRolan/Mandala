@@ -4,7 +4,6 @@
 #include <vector>
 #include <functional>
 
-#include <header/lib/images/Pixel.h>
 #include <QtGui/QPainter>
 
 
