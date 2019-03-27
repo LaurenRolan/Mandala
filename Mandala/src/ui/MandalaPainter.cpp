@@ -46,7 +46,7 @@ bool MandalaPainter::openImage(const QString &fileName)
 
 bool MandalaPainter::saveImage(const QString &fileName, const char *fileFormat)
 {
-    QImage visibleImage = image; //drawable->getResult(size().width(), size().height());
+    QImage visibleImage = image;
     resizeImage(&visibleImage, size());
 
 
@@ -129,7 +129,6 @@ void MandalaPainter::resizeEvent(QResizeEvent *event)
         int newWidth = qMax(width() + 128, image.width());
         int newHeight = qMax(height() + 128, image.height());
         resizeImage(&image, QSize(newWidth, newHeight));
-		//resizeImage(&loadedImage, QSize(newWidth, newHeight));
         update();
     }
     QWidget::resizeEvent(event);
@@ -199,12 +198,15 @@ void MandalaPainter::drawLine(QPoint &beginPoint, const QPoint &endPoint) {
 QPoint MandalaPainter::symmetry(const QPoint &point, double angle, QPointF &orig) const {
 	QPointF vec(std::cos (angle), std::sin (angle));
 
-	double n = vec.y() * vec.y() + vec.x() * vec.x();
+	double norm = vec.y() * vec.y() + vec.x() * vec.x();
 	double temp = vec.y() * point.x() + vec.x() * point.y();
 
+	double sideChanger = (vec.y() * orig.x() + vec.x() * orig.y() - temp) / norm;
+
+
 	return {
-			static_cast<int>(point.x() + 2 * vec.y() * (vec.y() * orig.x() + vec.x() * orig.y() - temp) / n),
-			static_cast<int>(point.y() + 2 * vec.x() * (vec.y() * orig.x() + vec.x() * orig.y() - temp) / n)
+			static_cast<int>(point.x() + 2 * vec.y() * sideChanger),
+			static_cast<int>(point.y() + 2 * vec.x() * sideChanger)
 	};
 }
 
@@ -261,27 +263,20 @@ void MandalaPainter::setGridIntensity(int gridIntensity) {
 void MandalaPainter::drawGrid(QPainter &painter) {
 	QLine line;
 
-	//if (numberSlices % 2 == 0) {
-		line = QLine(-static_cast<int>(myWidth / 2.), static_cast<int>(myHeight / 2.),
-				      static_cast<int>(myWidth / 2.), static_cast<int>(myHeight / 2.));
-	/*} else {
-		line = QLine(static_cast<int>(myWidth / 2.), -static_cast<int>(myHeight / 2.),
-				   static_cast<int>(myWidth / 2.), static_cast<int>(myHeight / 2.));
-	}*/
+	line = QLine(-static_cast<int>(myWidth / 2.), static_cast<int>(myHeight / 2.),
+				  static_cast<int>(myWidth / 2.), static_cast<int>(myHeight / 2.));
 
 
 	double angle = 360.0 / numberSlices;
-	QTransform transform;
-	transform.translate(myWidth / 2., myHeight / 2.).rotate(angle).translate(-myWidth / 2., -myHeight / 2.);
+	QTransform angleRotationTransform;
+	angleRotationTransform.translate(myWidth / 2., myHeight / 2.).rotate(angle).translate(-myWidth / 2., -myHeight / 2.);
 	QColor color(Qt::gray);
 	color.setAlpha(static_cast<int>(gridIntensity / 100. * 255));
 
 	painter.setPen(QPen(color, 5, Qt::DashLine, Qt::RoundCap, Qt::RoundJoin));
-
-
 	for(int i = 0; i < numberSlices; i++) {
 		painter.drawLine(line);
-		line  = transform.map(line);
+		line  = angleRotationTransform.map(line);
 	}
 
 	if (mirroring) {
@@ -292,7 +287,7 @@ void MandalaPainter::drawGrid(QPainter &painter) {
 		painter.setPen(QPen(color, 2, Qt::DashLine, Qt::RoundCap, Qt::RoundJoin));
 		for(int i = 0; i < numberSlices; i++) {
 			painter.drawLine(mirroringLine);
-			mirroringLine  = transform.map(mirroringLine);
+			mirroringLine  = angleRotationTransform.map(mirroringLine);
 		}
 	}
 
@@ -321,13 +316,6 @@ int MandalaPainter::getMyPenWidth() const {
 void MandalaPainter::setMirroring(int mirroring) {
 	MandalaPainter::mirroring = static_cast<bool>(mirroring);
 	repaint();
-}
-
-
-void MandalaPainter::resizeImage(int width, int height) {
-	image =  QImage(width, height, QImage::Format_RGB32);
-	image = drawable->getResult(width, height);
-	resize(width + 128, height + 10);
 }
 
 

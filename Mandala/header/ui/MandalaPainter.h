@@ -34,7 +34,6 @@ public slots:
 
 	void setMirroring(int mirroring);
 
-	void resizeImage(int width, int height);
 
 	void undo();
 	void redo();

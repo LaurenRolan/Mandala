@@ -28,7 +28,6 @@ private slots:
     void about();
     void resizeImage(const QString & newSize);
     void onPenWidthChanged(int newWidth);
-    void sizeChanged(const QString &);
     void setColorTurning(bool);
     void on_lineSlider_sliderMoved(int position);
     void on_sizeBox_currentIndexChanged(const QString &arg1);

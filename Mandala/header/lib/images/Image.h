@@ -10,12 +10,9 @@ public:
     Image();
 
     void drawForm(Form *f);
-    void setDimension(int w, int h);
 
     void undo();
     void redo();
-
-	const QPoint &getDimension() const;
 
 	void clear();
 
@@ -23,7 +20,7 @@ public:
 
 private:
     FormList *_forms;
-    QPoint dimension;
+
 
 };
 

@@ -215,9 +215,6 @@ void MainWindow::onPenWidthChanged(int newWidth) {
             QPen(mandalaArea->getMyPenColor()), QBrush(mandalaArea->getMyPenColor()));
 }
 
-void MainWindow::sizeChanged(const QString &s) {
-
-}
 
 void MainWindow::showPalette() {
 
