@@ -22,7 +22,6 @@ void DrawerUtility::onDraw(QPoint &p) {
 }
 
 void DrawerUtility::drawLine(QPoint &origin, const QPoint &extremity) {
-
 	drawForm(new LineForm(color, penWidth, origin, extremity));
 }
 

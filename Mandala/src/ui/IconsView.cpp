@@ -40,35 +40,6 @@ void IconsView::dragMoveEvent(QDragMoveEvent *event)
     }
 }
 
-void IconsView::dropEvent(QDropEvent *event)
-{
-    std::cerr << "Dropped";
-    if (event->mimeData()->hasFormat("application/x-dnditemdata")) {
-        QByteArray itemData = event->mimeData()->data("application/x-dnditemdata");
-        QDataStream dataStream(&itemData, QIODevice::ReadOnly);
-
-        QPixmap pixmap;
-        QPoint offset;
-        dataStream >> pixmap >> offset;
-
-        std::cerr << offset.x() << " " << offset.y();
-
-        QLabel *newIcon = new QLabel(this);
-        newIcon->setPixmap(pixmap);
-        newIcon->move(event->pos() - offset);
-        newIcon->show();
-        newIcon->setAttribute(Qt::WA_DeleteOnClose);
-
-        if (event->source() == this) {
-            event->setDropAction(Qt::MoveAction);
-            event->accept();
-        } else {
-            event->acceptProposedAction();
-        }
-    } else {
-        event->ignore();
-    }
-}
 
 void IconsView::mousePressEvent(QMouseEvent *event)
 {

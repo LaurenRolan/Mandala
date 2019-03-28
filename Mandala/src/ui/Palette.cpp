@@ -79,7 +79,7 @@ void Palette::setPenWidth(int newWidth) { myPenWidth = newWidth; }
 void Palette::setPenColor(QColor newColor) { myPenColor = newColor; }
 
 QPixmap Palette::QPixmapFromItem(QGraphicsItem * item){
-    QPixmap pixmap(item->boundingRect().size().toSize());
+    QPixmap pixmap(QSize(60, 60));
     pixmap.fill(Qt::transparent);
     QPainter painter(&pixmap);
     painter.setRenderHint(QPainter::Antialiasing);
