@@ -23,8 +23,14 @@ MainWindow::MainWindow(QWidget *parent) :
     mandalaArea->setHeight(360);
     mandalaArea->setWidth(640);
     scene = new QGraphicsScene();
-
     ui->lineView->setScene(scene);
+
+    palette = new Palette();
+    ui->arc->setScene(palette->arc);
+    ui->square->setScene(palette->square);
+    ui->circle->setScene(palette->circle);
+    ui->hexagon->setScene(palette->hexagon);
+    ui->triangle->setScene(palette->triangle);
 
     connectMenus();
 
@@ -69,6 +75,7 @@ void MainWindow::penColor()
     QColor newColor = QColorDialog::getColor(mandalaArea->penColor());
     if (newColor.isValid()) {
         mandalaArea->setPenColor(newColor);
+        palette->setPenColor(newColor);
         onPenWidthChanged(mandalaArea->getMyPenWidth());
     }
 }
@@ -133,8 +140,6 @@ void MainWindow::connectMenus()
 
     connect(ui->sizeBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(resizeImage(const QString&)));
     connect(ui->backgroundButton, SIGNAL(clicked()), this, SLOT(backgroundColor()));
-
-    connect(ui->actionShow_pallete, SIGNAL(triggered()), this, SLOT(showPalette()));
 }
 
 void MainWindow::resizeImage(const QString & newSize) {
@@ -211,10 +216,7 @@ void MainWindow::onPenWidthChanged(int newWidth) {
     scene->addEllipse(
             scene->width() / 2. - newWidth, scene->height() / 2. - newWidth, newWidth * 2, newWidth * 2,
             QPen(mandalaArea->getMyPenColor()), QBrush(mandalaArea->getMyPenColor()));
+    palette->setPenWidth(newWidth);
+    palette->drawAll();
 }
 
-
-void MainWindow::showPalette() {
-    palette = new Palette();
-    palette->show();
-}
