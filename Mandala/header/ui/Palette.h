@@ -2,14 +2,17 @@
 #define PALETTE_H
 
 #include <QColor>
-#include <QGraphicsScene>
+#include <QFrame>
+#include <QPixmap>
+#include "IconsView.h"
 
-class Palette
+class Palette : public QFrame
 {
 public:
     Palette();
     static void setPenWidth(int newWidth);
     static void setPenColor(QColor newColor);
+    static QPixmap QPixmapFromItem(QGraphicsItem * item);
     void drawAll();
 
     QGraphicsScene *square;

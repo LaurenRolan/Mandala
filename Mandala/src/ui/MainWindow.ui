@@ -222,7 +222,7 @@
       </rect>
      </property>
     </widget>
-    <widget class="QGraphicsView" name="square">
+    <widget class="IconsView" name="triangle">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -232,7 +232,7 @@
       </rect>
      </property>
     </widget>
-    <widget class="QGraphicsView" name="circle">
+    <widget class="IconsView" name="circle">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -242,7 +242,7 @@
       </rect>
      </property>
     </widget>
-    <widget class="QGraphicsView" name="triangle">
+    <widget class="IconsView" name="square">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -252,7 +252,7 @@
       </rect>
      </property>
     </widget>
-    <widget class="QGraphicsView" name="hexagon">
+    <widget class="IconsView" name="hexagon">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -262,7 +262,7 @@
       </rect>
      </property>
     </widget>
-    <widget class="QGraphicsView" name="arc">
+    <widget class="IconsView" name="arc">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -492,8 +492,13 @@
   <customwidget>
    <class>MandalaPainter</class>
    <extends>QWidget</extends>
-   <header location="global">MandalaPainter.h</header>
+   <header>MandalaPainter.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>IconsView</class>
+   <extends>QGraphicsView</extends>
+   <header location="global">IconsView.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

@@ -4,6 +4,13 @@
 #include <QWidget>
 #include <QMouseEvent>
 #include <header/lib/images/Drawable.h>
+#include <QMimeData>
+#include <QDrag>
+#include <QDragEnterEvent>
+#include <QDropEvent>
+#include <QDragMoveEvent>
+#include <QPainter>
+#include <QLabel>
 
 class MandalaPainter : public QWidget
 {
@@ -23,6 +30,8 @@ public:
     QColor penColor() const { return myPenColor; }
     int penWidth() const { return myPenWidth; }
 	const QColor &getMyPenColor() const;
+
+    void dropEvent(QDropEvent *event) override;
 
 public slots:
     void clearImage();

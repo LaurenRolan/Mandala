@@ -1,6 +1,7 @@
 #include "Palette.h"
 #include <QGraphicsEllipseItem>
-
+#include <iostream>
+#include <QStyleOptionGraphicsItem>
 
 int Palette::mySpanAngle = 120;
 int Palette::myStartAngle = 30;
@@ -59,12 +60,11 @@ void Palette::drawArc() {
     arc->clear();
 
     QPen pen = QPen(myPenColor, myPenWidth, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
-    QGraphicsEllipseItem* item = new QGraphicsEllipseItem(10.0, 10.0, 40.0, 40.0);
-    item->setStartAngle(myStartAngle * 16);
-    item->setSpanAngle(mySpanAngle * 16);
-    item->setPen(pen);
-
-    arc->addItem(item);
+    QGraphicsEllipseItem* arcDraw = new QGraphicsEllipseItem(10.0, 10.0, 40.0, 40.0);
+    arcDraw->setStartAngle(myStartAngle * 16);
+    arcDraw->setSpanAngle(mySpanAngle * 16);
+    arcDraw->setPen(pen);
+    arc->addItem(arcDraw);
 }
 
 void Palette::drawAll(){
@@ -77,3 +77,13 @@ void Palette::drawAll(){
 
 void Palette::setPenWidth(int newWidth) { myPenWidth = newWidth; }
 void Palette::setPenColor(QColor newColor) { myPenColor = newColor; }
+
+QPixmap Palette::QPixmapFromItem(QGraphicsItem * item){
+    QPixmap pixmap(item->boundingRect().size().toSize());
+    pixmap.fill(Qt::transparent);
+    QPainter painter(&pixmap);
+    painter.setRenderHint(QPainter::Antialiasing);
+    QStyleOptionGraphicsItem opt;
+    item->paint(&painter, &opt);
+    return pixmap;
+}

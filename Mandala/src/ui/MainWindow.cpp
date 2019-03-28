@@ -26,11 +26,20 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->lineView->setScene(scene);
 
     palette = new Palette();
-    ui->arc->setScene(palette->arc);
-    ui->square->setScene(palette->square);
-    ui->circle->setScene(palette->circle);
-    ui->hexagon->setScene(palette->hexagon);
-    ui->triangle->setScene(palette->triangle);
+    ui->arc->setScene((QGraphicsScene*)palette->arc);
+    ui->arc->setAccessibleName("arc");
+
+    ui->square->setScene((QGraphicsScene*)palette->square);
+    ui->square->setAccessibleName("square");
+
+    ui->circle->setScene((QGraphicsScene*)palette->circle);
+    ui->circle->setAccessibleName("circle");
+
+    ui->hexagon->setScene((QGraphicsScene*)palette->hexagon);
+    ui->hexagon->setAccessibleName("hexagon");
+
+    ui->triangle->setScene((QGraphicsScene*)palette->triangle);
+    ui->triangle->setAccessibleName("triangle");
 
     connectMenus();
 
