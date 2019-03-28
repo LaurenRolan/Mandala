@@ -32,6 +32,7 @@ public:
 	const QColor &getMyPenColor() const;
 
     void dropEvent(QDropEvent *event) override;
+    void dragEnterEvent(QDragEnterEvent*) override;
 
 public slots:
     void clearImage();

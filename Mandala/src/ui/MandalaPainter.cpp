@@ -21,6 +21,8 @@ MandalaPainter::MandalaPainter(QWidget *parent) : QWidget(parent)
     mirroring = false;
 
     drawable = new DrawerUtility();
+
+    this->setAcceptDrops(true);
 }
 
 void MandalaPainter::setSlices(int newNumberSlices) {
@@ -324,6 +326,20 @@ void MandalaPainter::dropEvent(QDropEvent *event)
         newIcon->show();
         newIcon->setAttribute(Qt::WA_DeleteOnClose);
 
+        if (event->source() == this) {
+            event->setDropAction(Qt::MoveAction);
+            event->accept();
+        } else {
+            event->acceptProposedAction();
+        }
+    } else {
+        event->ignore();
+    }
+}
+
+void MandalaPainter::dragEnterEvent(QDragEnterEvent *event)
+{
+    if (event->mimeData()->hasFormat("application/x-dnditemdata")) {
         if (event->source() == this) {
             event->setDropAction(Qt::MoveAction);
             event->accept();
