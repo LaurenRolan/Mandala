@@ -49,10 +49,6 @@ bool MandalaPainter::saveImage(const QString &fileName, const char *fileFormat)
     QImage visibleImage = image;
     resizeImage(&visibleImage, size());
 
-
-
-    std::cout << visibleImage.width() << " " << visibleImage.height() << std::endl;
-
     if (visibleImage.save(fileName, fileFormat)) {
         modified = false;
         return true;
@@ -162,6 +158,8 @@ void MandalaPainter::drawLine(QPoint &beginPoint, const QPoint &endPoint) {
 	drawable->setPenWidth(myPenWidth);
 	painter.setPen(pen);
 
+	int startAngle = computeStartAngle(orig, beginPoint, angle);
+
     for(int i = 0; i < numberSlices; i++) {
     	if(colorTurning) {
 			color.setHsv(static_cast<int>(h + angle * i), s, v, a);
@@ -174,8 +172,9 @@ void MandalaPainter::drawLine(QPoint &beginPoint, const QPoint &endPoint) {
 		drawable->drawLine(beginPoint, endPointTmp);
 
 		if (mirroring) {
+			double lineAngle;
 
-			double lineAngle = (180 - angle * (i + 1) + angle / 2.) * (M_PI / 180);
+			lineAngle = (180 - angle * (startAngle + i) + angle / 2.) * (M_PI / 180);
 
 			QPoint beginPointMirroring = symmetry(beginPoint, lineAngle, orig);
 			QPoint endPointMirroring   = symmetry(endPointTmp, lineAngle, orig);
@@ -197,6 +196,17 @@ void MandalaPainter::drawLine(QPoint &beginPoint, const QPoint &endPoint) {
 
 QPoint MandalaPainter::symmetry(const QPoint &point, double angle, QPointF &orig) const {
 	QPointF vec(std::cos (angle), std::sin (angle));
+
+	std::cout << "Symmetry call: " << std::endl;
+	std::cout << "\t";
+	std::cout << "Point : " << point.x() << " " << point.y();
+	std::cout << std::endl;
+	std::cout << "\t";
+	std::cout << "Angle : " << angle * 180 / M_PI;
+	std::cout << std::endl;
+	std::cout << "\t";
+	std::cout << "Orig  : " << orig.x() << " " << orig.y();
+	std::cout << std::endl;
 
 	double norm = vec.y() * vec.y() + vec.x() * vec.x();
 	double temp = vec.y() * point.x() + vec.x() * point.y();
@@ -328,5 +338,41 @@ void MandalaPainter::setBackgroundColor(const QColor &newColor) { //Same effect 
     QPainter painter(&image);
     drawable->setBackgroundColor(QColor(newColor));
     painter.fillRect(QRect(QPoint(0,0), QPoint(myWidth, myHeight)), QBrush(newColor));
+}
+
+int MandalaPainter::computeStartAngle(QPointF &f, QPoint &point, double angle) {
+	QVector2D vec1 = QVector2D(-1, 0);
+	QVector2D vec2 = QVector2D(point.x() - f.x(), point.y() - f.y());
+
+
+	double crossProduct = QVector2D::dotProduct(vec1, vec2) / vec1.length() / vec2.length();
+
+	double computedAngle = acos(crossProduct) / M_PI * 180;
+
+	if(vec2.y() > 0) {
+		computedAngle += 180;
+	}
+/*
+	std::cout << "========================================================" << std::endl;
+	std::cout << "computeStartAngle : " << std::endl;
+	std::cout << "\t";
+	std::cout << "Axis : " << vec1.x() << " " << vec1.y();
+	std::cout << std::endl;
+	std::cout << "\t";
+	std::cout << "Vec : " << vec2.x() << " " << vec2.y();
+	std::cout << std::endl;
+	std::cout << std::endl;
+	std::cout << "\t";
+	std::cout << "Angle : " << angle;
+	std::cout << std::endl;
+	std::cout << std::endl;
+	std::cout << "\t";
+	std::cout << "CrossProduct : " << crossProduct;
+	std::cout << std::endl;
+	std::cout << "\t";
+	std::cout << "Acos : " << computedAngle;
+	std::cout << std::endl;
+*/
+	return 1 + (int)(computedAngle/angle);
 }
 
