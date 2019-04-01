@@ -9,11 +9,14 @@
 #include <header/ui/MainWindow.h>
 #include <QtCore/QCoreApplication>
 #include <QPixmap>
-
+#include <string.h>
+#include <iostream>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::MainWindow),
+    file(QString("")),
+    extension(new char[3])
 {
      QCoreApplication::setAttribute(Qt::AA_DontUseNativeMenuBar);
 
@@ -76,8 +79,27 @@ void MainWindow::save()
 {
     QAction *action = qobject_cast<QAction *>(sender());
     QByteArray fileFormat = action->data().toByteArray();
-    saveFile(fileFormat);
+    if(QString::compare(file, QString("")) == 0) //First save
+        saveFile(fileFormat);
+    else
+        saveToKnown();
 }
+
+
+void MainWindow::saveAs()
+{
+    saveFile("png");
+}
+void MainWindow::newImage()
+{
+    maybeSave();
+    mandalaArea->clearImage();
+    saveFile("png");
+}
+ void MainWindow::saveToKnown()
+ {
+     mandalaArea->saveImage(file, extension);
+ }
 
 void MainWindow::penColor()
 {
@@ -124,6 +146,8 @@ void MainWindow::connectMenus()
 {
     connect(ui->actionAbout_this_program, SIGNAL(triggered()), this, SLOT(about()));
     connect(ui->action_Save, SIGNAL(triggered()), this, SLOT(save()));
+    connect(ui->actionSave_As, SIGNAL(triggered()), this, SLOT(saveAs()));
+    connect(ui->action_New, SIGNAL(triggered()), this, SLOT(newImage()));
     connect(ui->action_Open, SIGNAL(triggered()), this, SLOT(open()));
     connect(ui->lineColorButton, SIGNAL(clicked()), this, SLOT(penColor()));
 
@@ -200,6 +224,8 @@ bool MainWindow::saveFile(const QByteArray &fileFormat)
     if (fileName.isEmpty()) {
         return false;
     } else {
+        file = fileName;
+        strcpy(extension, fileFormat.constData());
         return mandalaArea->saveImage(fileName, fileFormat.constData());
     }
 }

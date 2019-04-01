@@ -23,6 +23,8 @@ protected:
 private slots:
     void open();
     void save();
+    void saveAs();
+    void newImage();
     void penColor();
     void backgroundColor();
     void penWidth(int width);
@@ -37,6 +39,10 @@ private:
     void connectMenus();
     bool maybeSave();
     bool saveFile(const QByteArray &fileFormat);
+    void saveToKnown();
+
+    QString file;
+    char * extension;
 
     MandalaPainter *mandalaArea;
 
