@@ -229,3 +229,7 @@ void MainWindow::onPenWidthChanged(int newWidth) {
     palette->drawAll();
 }
 
+void MainWindow::showPalette() {
+
+}
+

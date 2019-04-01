@@ -319,7 +319,7 @@ void MandalaPainter::dropEvent(QDropEvent *event)
 {
     if (event->mimeData()->hasFormat("application/x-dnditemdata")) {
         QByteArray itemData = event->mimeData()->data("application/x-dnditemdata");
-        QDataStream dataStream(&itemData, QIODevice::ReadOnly);
+        QDataStream dataStream(&itemData,  QIODevice::ReadOnly);
 
         QPixmap pixmap;
         QPoint offset;
