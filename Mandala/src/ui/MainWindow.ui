@@ -404,7 +404,6 @@
     </property>
     <addaction name="actionUndo"/>
     <addaction name="actionRedo"/>
-    <addaction name="actionShow_pallete"/>
    </widget>
    <widget class="QMenu" name="menu_Help">
     <property name="title">
@@ -471,14 +470,6 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+Z</string>
-   </property>
-  </action>
-  <action name="actionShow_pallete">
-   <property name="text">
-    <string>Show palette</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+P</string>
    </property>
   </action>
   <action name="actionAbout_this_program">

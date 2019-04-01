@@ -5,6 +5,7 @@
 #include <header/lib/images/DrawerUtility.h>
 #include <header/ui/MandalaPainter.h>
 #include <cmath>
+#include <QGraphicsPixmapItem>
 
 
 MandalaPainter::MandalaPainter(QWidget *parent) : QWidget(parent)
@@ -297,19 +298,14 @@ void MandalaPainter::setMirroring(int mirroring) {
 
 
 void MandalaPainter::setBackgroundColor(const QColor &newColor) { //Same effect of clear
-
-//    QPalette p = this->palette();
-//    p.setColor(QPalette::Background, newColor);
-//    this->setPalette(p);
-
     QPainter painter(&image);
     drawable->setBackgroundColor(QColor(newColor));
     painter.fillRect(QRect(QPoint(0,0), QPoint(myWidth, myHeight)), QBrush(newColor));
+    repaint();
 }
 
 void MandalaPainter::dropEvent(QDropEvent *event)
 {
-    std::cerr << "Dropped";
     if (event->mimeData()->hasFormat("application/x-dnditemdata")) {
         QByteArray itemData = event->mimeData()->data("application/x-dnditemdata");
         QDataStream dataStream(&itemData, QIODevice::ReadOnly);
@@ -318,13 +314,8 @@ void MandalaPainter::dropEvent(QDropEvent *event)
         QPoint offset;
         dataStream >> pixmap >> offset;
 
-        std::cerr << offset.x() << " " << offset.y();
-
-        QLabel *newIcon = new QLabel(this);
-        newIcon->setPixmap(pixmap);
-        newIcon->move(event->pos() - offset);
-        newIcon->show();
-        newIcon->setAttribute(Qt::WA_DeleteOnClose);
+        drawPixmap(pixmap, event->pos());
+        drawable->endForm();
 
         if (event->source() == this) {
             event->setDropAction(Qt::MoveAction);
@@ -340,6 +331,7 @@ void MandalaPainter::dropEvent(QDropEvent *event)
 void MandalaPainter::dragEnterEvent(QDragEnterEvent *event)
 {
     if (event->mimeData()->hasFormat("application/x-dnditemdata")) {
+        drawable->beginForm();
         if (event->source() == this) {
             event->setDropAction(Qt::MoveAction);
             event->accept();
@@ -349,4 +341,53 @@ void MandalaPainter::dragEnterEvent(QDragEnterEvent *event)
     } else {
         event->ignore();
     }
+}
+
+void MandalaPainter::drawPixmap(const QPixmap & pixmap, const QPoint & point){
+    QPainter painter(&image);
+    QPoint endPointTmp(point.x() - 30, point.y() -30);
+    QPixmap pixImage(pixmap);
+
+    QPointF orig(myWidth / 2. -30, myHeight / 2. -30); //Fixing origin
+
+    double angle = 360.0 / numberSlices;
+    QTransform rotateTransform;
+    rotateTransform.translate(orig.x(), orig.y()).rotate(angle).translate(- orig.x(), - orig.y());
+
+    int h, s, v, a;
+    myPenColor.getHsv(&h, &s, &v, &a);
+
+    QColor color = myPenColor;
+
+    drawable->setColor(color);
+    drawable->setPenWidth(myPenWidth);
+
+    for(int i = 0; i < numberSlices; i++) {
+        if(colorTurning) {
+            color.setHsv(static_cast<int>(h + angle * i), s, v, a);
+            drawable->setColor(color);
+        }
+
+        QMatrix rm;
+        rm.rotate(360 - angle);
+        int pxw = pixImage.width(), pxh = pixImage.height();
+        pixImage = pixImage.transformed(rm);
+        pixImage = pixImage.copy((pixImage.width() - pxw)/2, (pixImage.height() - pxh)/2, pxw, pxh);
+
+        painter.drawPixmap(endPointTmp, pixImage);
+        drawable->drawPixmap(endPointTmp, pixImage);
+
+        if (mirroring) {
+            double lineAngle = (180 - angle * (i + 1) + angle / 2.) * (M_PI / 180);
+
+            QPoint endPointMirroring   = symmetry(endPointTmp, lineAngle, orig);
+
+            painter.drawPixmap(endPointMirroring, pixImage);
+            drawable->drawPixmap(endPointMirroring, pixImage);
+        }
+        endPointTmp = rotateTransform.map(endPointTmp);
+
+    }
+    modified = true;
+    repaint();
 }

@@ -32,7 +32,6 @@ private slots:
     void setColorTurning(bool);
     void on_lineSlider_sliderMoved(int position);
     void on_sizeBox_currentIndexChanged(const QString &arg1);
-    void showPalette();
 
 private:
     void connectMenus();

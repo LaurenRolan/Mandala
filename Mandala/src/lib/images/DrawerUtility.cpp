@@ -4,6 +4,7 @@
 
 #include <lib/images/DrawerUtility.h>
 #include <lib/images/forms/PixelForm.h>
+#include <lib/images/forms/PixmapForm.h>
 #include <lib/images/forms/LineForm.h>
 #include <header/lib/images/DrawerUtility.h>
 #include <iostream>
@@ -23,6 +24,10 @@ void DrawerUtility::onDraw(QPoint &p) {
 
 void DrawerUtility::drawLine(QPoint &origin, const QPoint &extremity) {
 	drawForm(new LineForm(color, penWidth, origin, extremity));
+}
+
+void DrawerUtility::drawPixmap(QPoint &origin, QPixmap & pixmap) {
+    drawForm(new PixmapForm(color, pixmap, origin));
 }
 
 void DrawerUtility::setColor(QColor &color) {

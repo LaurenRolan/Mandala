@@ -6,7 +6,7 @@
 int Palette::mySpanAngle = 120;
 int Palette::myStartAngle = 30;
 int Palette::myPenWidth = 3;
-QColor Palette::myPenColor = QColor(Qt::black);
+QColor Palette::myPenColor = QColor(Qt::blue);
 
 Palette::Palette() {
     triangle = new QGraphicsScene();

@@ -62,6 +62,7 @@ private:
     void drawLineTo(const QPoint &endPoint);
     void drawLine(QPoint &beginPoint, const QPoint &endPoint);
     void resizeImage(QImage *image, const QSize &newSize);
+    void drawPixmap(const QPixmap & pixmap, const QPoint & point);
 
     bool modified;
     bool scribbling;
