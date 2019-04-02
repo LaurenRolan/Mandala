@@ -6,6 +6,7 @@
 #include <header/ui/MandalaPainter.h>
 #include <cmath>
 #include <QVector2D>
+#include <QBitmap>
 
 MandalaPainter::MandalaPainter(QWidget *parent) : QWidget(parent)
 {
@@ -393,6 +394,10 @@ void MandalaPainter::drawPixmap(const QPixmap & pixmap, const QPoint & point){
         if(colorTurning) {
             color.setHsv(static_cast<int>(h + angle * i), s, v, a);
             drawable->setColor(color);
+            QPixmap pxr( pixImage.size() );
+            pxr.fill( color );
+            pxr.setMask( pixImage.createMaskFromColor( Qt::transparent ) );
+            pixImage = pxr;
         }
 
         QMatrix rm;
