@@ -9,11 +9,14 @@
 #include <header/ui/MainWindow.h>
 #include <QtCore/QCoreApplication>
 #include <QPixmap>
-
+#include <string.h>
+#include <iostream>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::MainWindow),
+    file(QString("")),
+    extension(new char[3])
 {
      QCoreApplication::setAttribute(Qt::AA_DontUseNativeMenuBar);
 
@@ -23,8 +26,23 @@ MainWindow::MainWindow(QWidget *parent) :
     mandalaArea->setHeight(360);
     mandalaArea->setWidth(640);
     scene = new QGraphicsScene();
-
     ui->lineView->setScene(scene);
+
+    palette = new Palette();
+    ui->arc->setScene((QGraphicsScene*)palette->arc);
+    ui->arc->setAccessibleName("arc");
+
+    ui->square->setScene((QGraphicsScene*)palette->square);
+    ui->square->setAccessibleName("square");
+
+    ui->circle->setScene((QGraphicsScene*)palette->circle);
+    ui->circle->setAccessibleName("circle");
+
+    ui->hexagon->setScene((QGraphicsScene*)palette->hexagon);
+    ui->hexagon->setAccessibleName("hexagon");
+
+    ui->triangle->setScene((QGraphicsScene*)palette->triangle);
+    ui->triangle->setAccessibleName("triangle");
 
     connectMenus();
 
@@ -61,14 +79,34 @@ void MainWindow::save()
 {
     QAction *action = qobject_cast<QAction *>(sender());
     QByteArray fileFormat = action->data().toByteArray();
-    saveFile(fileFormat);
+    if(QString::compare(file, QString("")) == 0) //First save
+        saveFile(fileFormat);
+    else
+        saveToKnown();
 }
+
+
+void MainWindow::saveAs()
+{
+    saveFile("png");
+}
+void MainWindow::newImage()
+{
+    maybeSave();
+    mandalaArea->clearImage();
+    saveFile("png");
+}
+ void MainWindow::saveToKnown()
+ {
+     mandalaArea->saveImage(file, extension);
+ }
 
 void MainWindow::penColor()
 {
     QColor newColor = QColorDialog::getColor(mandalaArea->penColor());
     if (newColor.isValid()) {
         mandalaArea->setPenColor(newColor);
+        palette->setPenColor(newColor);
         onPenWidthChanged(mandalaArea->getMyPenWidth());
     }
 }
@@ -87,8 +125,6 @@ void MainWindow::penWidth(int width)
     mandalaArea->setPenWidth(width);
 }
 
-
-//TODO : modify the info
 void MainWindow::about()
 {
     QMessageBox about(this);
@@ -110,6 +146,8 @@ void MainWindow::connectMenus()
 {
     connect(ui->actionAbout_this_program, SIGNAL(triggered()), this, SLOT(about()));
     connect(ui->action_Save, SIGNAL(triggered()), this, SLOT(save()));
+    connect(ui->actionSave_As, SIGNAL(triggered()), this, SLOT(saveAs()));
+    connect(ui->action_New, SIGNAL(triggered()), this, SLOT(newImage()));
     connect(ui->action_Open, SIGNAL(triggered()), this, SLOT(open()));
     connect(ui->lineColorButton, SIGNAL(clicked()), this, SLOT(penColor()));
 
@@ -135,8 +173,6 @@ void MainWindow::connectMenus()
 
     connect(ui->sizeBox, SIGNAL(currentIndexChanged(const QString &)), this, SLOT(resizeImage(const QString&)));
     connect(ui->backgroundButton, SIGNAL(clicked()), this, SLOT(backgroundColor()));
-
-    connect(ui->actionShow_pallete, SIGNAL(triggered()), this, SLOT(showPalette()));
 }
 
 void MainWindow::resizeImage(const QString & newSize) {
@@ -188,6 +224,8 @@ bool MainWindow::saveFile(const QByteArray &fileFormat)
     if (fileName.isEmpty()) {
         return false;
     } else {
+        file = fileName;
+        strcpy(extension, fileFormat.constData());
         return mandalaArea->saveImage(fileName, fileFormat.constData());
     }
 }
@@ -213,12 +251,6 @@ void MainWindow::onPenWidthChanged(int newWidth) {
     scene->addEllipse(
             scene->width() / 2. - newWidth, scene->height() / 2. - newWidth, newWidth * 2, newWidth * 2,
             QPen(mandalaArea->getMyPenColor()), QBrush(mandalaArea->getMyPenColor()));
-}
-
-
-void MainWindow::showPalette() {
-
-    QWidget *wdg = new QWidget;
-    wdg->show();
-
+    palette->setPenWidth(newWidth);
+    palette->drawAll();
 }
