@@ -197,7 +197,7 @@
       <x>10</x>
       <y>170</y>
       <width>751</width>
-      <height>391</height>
+      <height>381</height>
      </rect>
     </property>
     <property name="sizePolicy">
@@ -215,10 +215,60 @@
     <widget class="MandalaPainter" name="widget" native="true">
      <property name="geometry">
       <rect>
-       <x>50</x>
+       <x>100</x>
        <y>10</y>
        <width>640</width>
        <height>360</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="IconsView" name="triangle">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>20</y>
+       <width>60</width>
+       <height>60</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="IconsView" name="circle">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>90</y>
+       <width>60</width>
+       <height>60</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="IconsView" name="square">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>160</y>
+       <width>60</width>
+       <height>60</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="IconsView" name="hexagon">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>230</y>
+       <width>60</width>
+       <height>60</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="IconsView" name="arc">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>300</y>
+       <width>60</width>
+       <height>60</height>
       </rect>
      </property>
     </widget>
@@ -354,7 +404,6 @@
     </property>
     <addaction name="actionUndo"/>
     <addaction name="actionRedo"/>
-    <addaction name="actionShow_pallete"/>
    </widget>
    <widget class="QMenu" name="menu_Help">
     <property name="title">
@@ -423,14 +472,6 @@
     <string>Ctrl+Shift+Z</string>
    </property>
   </action>
-  <action name="actionShow_pallete">
-   <property name="text">
-    <string>Show palette</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+P</string>
-   </property>
-  </action>
   <action name="actionAbout_this_program">
    <property name="text">
     <string>About this program</string>
@@ -442,8 +483,13 @@
   <customwidget>
    <class>MandalaPainter</class>
    <extends>QWidget</extends>
-   <header location="global">MandalaPainter.h</header>
+   <header>MandalaPainter.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>IconsView</class>
+   <extends>QGraphicsView</extends>
+   <header location="global">IconsView.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

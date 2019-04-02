@@ -13,7 +13,8 @@
 class Drawable {
 public:
 	virtual void onDraw(QPoint &p) = 0;
-	virtual void drawLine(QPoint &origin, const QPoint &extremity) = 0;
+        virtual void drawLine(QPoint &origin, const QPoint &extremity) = 0;
+        virtual void drawPixmap(QPoint &origin, QPixmap & pixmap) = 0;
 	virtual void setColor(QColor &color) = 0;
 	virtual void setPenWidth(int penWidth) = 0;
 	virtual void clear() = 0;
