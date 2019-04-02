@@ -10,10 +10,10 @@ QColor Palette::myPenColor = QColor(Qt::blue);
 
 Palette::Palette() {
     triangle = new QGraphicsScene();
-    circle = new QGraphicsScene();
-    square = new QGraphicsScene();
-    arc = new QGraphicsScene();
-    hexagon = new QGraphicsScene();
+    circle   = new QGraphicsScene();
+    square   = new QGraphicsScene();
+    arc      = new QGraphicsScene();
+    hexagon  = new QGraphicsScene();
 }
 
 void Palette::drawTriangle() {
