@@ -231,16 +231,6 @@ bool MainWindow::saveFile(const QByteArray &fileFormat)
 }
 
 
-void MainWindow::on_lineSlider_sliderMoved(int position)
-{
-    penWidth(position);
-}
-
-void MainWindow::on_sizeBox_currentIndexChanged(const QString &arg1)
-{
-    resizeImage(arg1);
-}
-
 void MainWindow::setColorTurning(bool newValue) {
     mandalaArea->setColorTurning(newValue);
 
