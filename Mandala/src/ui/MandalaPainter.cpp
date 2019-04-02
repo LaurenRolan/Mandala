@@ -200,17 +200,6 @@ void MandalaPainter::drawLine(QPoint &beginPoint, const QPoint &endPoint) {
 QPoint MandalaPainter::symmetry(const QPoint &point, double angle, QPointF &orig) const {
 	QPointF vec(std::cos (angle), std::sin (angle));
 
-	std::cout << "Symmetry call: " << std::endl;
-	std::cout << "\t";
-	std::cout << "Point : " << point.x() << " " << point.y();
-	std::cout << std::endl;
-	std::cout << "\t";
-	std::cout << "Angle : " << angle * 180 / M_PI;
-	std::cout << std::endl;
-	std::cout << "\t";
-	std::cout << "Orig  : " << orig.x() << " " << orig.y();
-	std::cout << std::endl;
-
 	double norm = vec.y() * vec.y() + vec.x() * vec.x();
 	double temp = vec.y() * point.x() + vec.x() * point.y();
 
