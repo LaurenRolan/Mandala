@@ -15,7 +15,6 @@
 class DrawerUtility : public Drawable {
 public:
 	DrawerUtility();
-	void onDraw(QPoint &p) override;
 	void drawLine(QPoint &origin, const QPoint &extremity) override;
     void drawPixmap(QPoint &origin, QPixmap & pixmap) override;
 	void clear() override;

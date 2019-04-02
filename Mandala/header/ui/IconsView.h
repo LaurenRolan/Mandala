@@ -6,10 +6,10 @@ class IconsView : public QGraphicsView
 {
     Q_OBJECT
 public:
-    IconsView(QFrame * parent);
-    void dragEnterEvent(QDragEnterEvent *event);
-    void dragMoveEvent(QDragMoveEvent *event);
-    void mousePressEvent(QMouseEvent *event);
+	explicit IconsView(QFrame * parent);
+    void dragEnterEvent(QDragEnterEvent *event) override;
+    void dragMoveEvent(QDragMoveEvent *event) override;
+    void mousePressEvent(QMouseEvent *event) override;
 };
 
 #endif // ICONSVIEW_H

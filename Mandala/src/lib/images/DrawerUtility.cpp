@@ -3,7 +3,6 @@
 //
 
 #include <lib/images/DrawerUtility.h>
-#include <lib/images/forms/PixelForm.h>
 #include <lib/images/forms/PixmapForm.h>
 #include <lib/images/forms/LineForm.h>
 #include <header/lib/images/DrawerUtility.h>
@@ -18,9 +17,6 @@ DrawerUtility::DrawerUtility() {
 
 }
 
-void DrawerUtility::onDraw(QPoint &p) {
-	drawForm(new PixelForm(color, p));
-}
 
 void DrawerUtility::drawLine(QPoint &origin, const QPoint &extremity) {
 	drawForm(new LineForm(color, penWidth, origin, extremity));

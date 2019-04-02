@@ -9,7 +9,7 @@
 #include <header/ui/MainWindow.h>
 #include <QtCore/QCoreApplication>
 #include <QPixmap>
-#include <string.h>
+#include <cstring>
 #include <iostream>
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -29,10 +29,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->lineView->setScene(scene);
 
     palette = new Palette();
-    ui->arc->setScene((QGraphicsScene*)palette->arc);
+    ui->arc->setScene(palette->arc);
     ui->arc->setAccessibleName("arc");
 
-    ui->square->setScene((QGraphicsScene*)palette->square);
+    ui->square->setScene(palette->square);
     ui->square->setAccessibleName("square");
 
     ui->circle->setScene((QGraphicsScene*)palette->circle);
@@ -77,7 +77,7 @@ void MainWindow::open()
 
 void MainWindow::save()
 {
-    QAction *action = qobject_cast<QAction *>(sender());
+    auto *action = qobject_cast<QAction *>(sender());
     QByteArray fileFormat = action->data().toByteArray();
     if(QString::compare(file, QString("")) == 0) //First save
         saveFile(fileFormat);

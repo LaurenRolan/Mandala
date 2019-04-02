@@ -60,7 +60,7 @@ void Palette::drawArc() {
     arc->clear();
 
     QPen pen = QPen(myPenColor, myPenWidth, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
-    QGraphicsEllipseItem* arcDraw = new QGraphicsEllipseItem(10.0, 10.0, 40.0, 40.0);
+    auto * arcDraw = new QGraphicsEllipseItem(10.0, 10.0, 40.0, 40.0);
     arcDraw->setStartAngle(myStartAngle * 16);
     arcDraw->setSpanAngle(mySpanAngle * 16);
     arcDraw->setPen(pen);
