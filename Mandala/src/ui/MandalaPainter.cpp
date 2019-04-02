@@ -5,7 +5,7 @@
 #include <header/lib/images/DrawerUtility.h>
 #include <header/ui/MandalaPainter.h>
 #include <cmath>
-
+#include <QVector2D>
 
 MandalaPainter::MandalaPainter(QWidget *parent) : QWidget(parent)
 {
@@ -366,27 +366,7 @@ int MandalaPainter::computeStartAngle(QPointF &f, QPoint &point, double angle) {
 	if(vec2.y() > 0) {
 		computedAngle += 180;
 	}
-/*
-	std::cout << "========================================================" << std::endl;
-	std::cout << "computeStartAngle : " << std::endl;
-	std::cout << "\t";
-	std::cout << "Axis : " << vec1.x() << " " << vec1.y();
-	std::cout << std::endl;
-	std::cout << "\t";
-	std::cout << "Vec : " << vec2.x() << " " << vec2.y();
-	std::cout << std::endl;
-	std::cout << std::endl;
-	std::cout << "\t";
-	std::cout << "Angle : " << angle;
-	std::cout << std::endl;
-	std::cout << std::endl;
-	std::cout << "\t";
-	std::cout << "CrossProduct : " << crossProduct;
-	std::cout << std::endl;
-	std::cout << "\t";
-	std::cout << "Acos : " << computedAngle;
-	std::cout << std::endl;
-*/
+
 	return 1 + (int)(computedAngle/angle);
 }
 
