@@ -43,7 +43,7 @@ void IconsView::dragMoveEvent(QDragMoveEvent *event)
 
 void IconsView::mousePressEvent(QMouseEvent *event)
 {
-    QGraphicsView *child = dynamic_cast<QGraphicsView*>(childAt(event->pos()));
+    QGraphicsView *child = static_cast<QGraphicsView*>(childAt(event->pos()));
     if (!child)
         return;
 
@@ -58,7 +58,7 @@ void IconsView::mousePressEvent(QMouseEvent *event)
     QMimeData *mimeData = new QMimeData;
     mimeData->setData("application/x-dnditemdata", itemData);
 
-    auto *drag = new QDrag(this);
+    QDrag *drag = new QDrag(this);
     drag->setMimeData(mimeData);
     drag->setPixmap(pixmap);
     drag->setHotSpot(event->pos() - child->pos());
